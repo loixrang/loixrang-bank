@@ -89,6 +89,7 @@
         <h1 class="font-bold text-2xl text-center hidden">
           Please select an activity above
         </h1>
+        <p class="font-semibold text-lg" id="message">No messages</p>
         <section class="deposit hidden">
           <h1 class="font-black text-6xl text-[#2f8f34] text-center">
             Deposit
@@ -110,31 +111,29 @@
           >
             Deposit Amount
           </button>
-          <p class="font-semibold text-lg" id="message"></p>
         </section>
-        <section class="transfer">
-          <div class="form">
-            <label for="act-num">Enter account number: </label>
-            <input name="act-num" id="act-num" type="number" /><br />
-            <label for="">Select Bank:</label>
-            <select id="bank">
-              <option value="null">Select</option>
-              <option value="FCMB">FCMB</option>
-              <option value="WEMA">WEMA</option>
-              <option value="Fidelity">Fidelity</option>
-              <option value="Access">Access</option>
-            </select>
-            <button id="check-act">Check</button>
-            <p id="message"></p>
-            <button id="start-transfer" class="hidden">Next</button>
+        <section class="transfer form">
+          <h1 class="font-black text-6xl text-[#5B35D5] text-center">
+            Transfer
+          </h1>
+          <label class="block py-3 font-semibold text-[#17213D] text-2xl" for="act-num">Enter account number: </label>
+          <input class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]" name="act-num" id="act-num" type="number" />
+          <label class="block py-3 font-semibold text-[#17213D] text-2xl" for="">Select Bank:</label>
+          <select class="w-50 text-lg rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]" id="bank">
+            <option value="null">Select</option>
+            <option value="FCMB">FCMB</option>
+            <option value="WEMA">WEMA</option>
+            <option value="Fidelity">Fidelity</option>
+            <option value="Access">Access</option>
+          </select>
+          <button class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer" id="check-act">Check</button><br>
+          <button id="start-transfer" class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer hidden ">Next</button>
+          <div id="tr-screen" class="hidden">
+            <label class="block py-3 font-semibold text-[#17213D] text-2xl"
+            for="tr-amount-add" for="tr-amount">Enter amount you wish to transfer: </label>
+            <input class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]" type="number" id="tr-amount" />
+            <button class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer" id="tr-btn">Transfer</button>
           </div>
-          <main id="tr-screen" class="hidden style">
-            <h1>Balance: <span id="balance">5000</span></h1>
-            <label for="tr-amount">Enter amount you wish to transfer: </label>
-            <input type="number" id="tr-amount" />
-            <button id="tr-btn">Transfer</button>
-            <p id="tr-message"></p>
-          </main>
         </section>
       </div>
     </main>
