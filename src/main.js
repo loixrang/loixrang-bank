@@ -9,11 +9,33 @@ const elements = {
   bankName: $("bank"),
   checkBtn: $("check-act"),
   msg: $("message"),
-  trMsg: $("tr-message"),
   nextBtn: $("start-transfer"),
   trScreen: $("tr-screen"),
   addAmount: $("tr-amount-add"),
-  addBtn: $("add-btn")
+  addBtn: $("add-btn"),
+  transOp: $("transfer-op"),
+  withOp: $("withdraw-op"),
+  depOp: $("deposit-op"),
+  trans: $("transfer"),
+  with: $("withdraw"),
+  dep: $("deposit"),
+  placeHolder: $("holder-text")
+}
+
+elements.transOp.addEventListener('click', () => {
+  test()
+})
+elements.withOp.addEventListener('click', () => {
+  test()
+})
+elements.depOp.addEventListener('click', () => {
+  test()
+})
+
+function test() {
+  console.log("working")
+  elements.msg.classList.remove("hidden")
+  elements.placeHolder.classList.add("hidden")
 }
 
 const Persons = {
@@ -37,6 +59,30 @@ const Persons = {
     accountNumber: '0167362038',
     bank: 'Access'
   }
+}
+
+function deposit() {
+  const addValue = elements.addAmount.value;
+  amount = Number(elements.balance.textContent)
+
+  if (addValue <= 3000 && addValue >= 100) {
+    newBalance = amount + Number(addValue)
+    elements.balance.textContent = `N${newBalance}`
+    elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
+    elements.msg.style.color = 'black'
+  } else if (addValue > 3000) {
+    elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
+    elements.msg.style.color = 'red'
+    newBalance = amount;
+    elements.balance.textContent = amount;
+  } else if (addValue < 100) {
+    elements.msg.textContent = `Unsuccessful, your amount is below N100`
+    elements.msg.style.color = 'red'
+    newBalance = amount;
+    elements.balance.textContent = amount;
+  }
+  elements.balance.textContent = newBalance;
+  elements.addAmount.value = ''
 }
 
 function transfer() {
@@ -118,26 +164,5 @@ elements.checkBtn.addEventListener('click', () => {
 // }
 
 elements.addBtn.addEventListener('click', () => {
-  const addValue = elements.addAmount.value;
-  amount = Number(elements.balance.textContent)
-
-  if (addValue <= 3000 && addValue >= 100) {
-    newBalance = amount + Number(addValue)
-    elements.balance.textContent = `N${newBalance}`
-    elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
-    elements.msg.style.color = 'black'
-  } else if (addValue > 3000) {
-    elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
-    elements.msg.style.color = 'red'
-    newBalance = amount;
-    elements.balance.textContent = amount;
-  } else if (addValue < 100) {
-    elements.msg.textContent = `Unsuccessful, your amount is below N100`
-    elements.msg.style.color = 'red'
-    newBalance = amount;
-    elements.balance.textContent = amount;
-  }
-  elements.balance.textContent = newBalance;
-  elements.addAmount.value = ''
-
+  deposit()
 })
