@@ -4,15 +4,17 @@
     <meta charset="UTF-8" />
     <link rel="shortcut icon" href="src/assets/vite.svg" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css" />
     <title>bank-project</title>
   </head>
-  <body class="bg-[#d7dbee] h-[200dvh]">
-    <div class="h-26">
+  <body class="bg-[#F7F8FC]">
+    <div class="h-40">
       <header class="heading">
-        <h1 class="font-bold text-2xl"><mark class="text-purple-700 bg-transparent">Loixrang</mark> Bank</h1>
+        <h1 class="font-bold text-2xl">
+          <mark class="text-purple-700 bg-transparent">Loixrang</mark> Bank
+        </h1>
         <ul class="flex gap-5">
-          <li class="text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md"><a href="#">Home</a></li>
+          <li class="active-link"><a href="">Home</a></li>
           <li><a href="">Transactions</a></li>
           <li><a href="">Profile</a></li>
           <li><a href="">Logout</a></li>
@@ -21,10 +23,119 @@
     </div>
     <main>
       <div class="banner">
-        <div class="w-[75%]"></div>
-        <div class="w-1/4 bg-[#4e3b8a] flex items-center justify-center">
-          <img class="w-1/3" src="src/assets/images/hero-bank-illustration.svg" alt="">
+        <div class="w-[75%]">
+          <h1>
+            <span class="text-gray-300">Welcome Back, </span
+            ><span class="block text-3xl font-bold">Valued Customer</span>
+          </h1>
+          <p class="py-4">
+            <span class="text-gray-300">Your Balance: </span
+            ><span id="balance" class="block text-3xl font-bold">N250,000</span>
+          </p>
+          <button class="bg-[#5B35D5] px-5 py-2 rounded-md cursor-pointer">
+            View balance
+          </button>
         </div>
+        <div class="w-1/4 flex items-center justify-center">
+          <img
+            class="w-full h-full"
+            src="src/assets/images/hero-bank-illustration.svg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div class="interact text-[#17213D]">
+        <h1 class="text-center font-bold text-2xl">
+          What would you like to do?
+        </h1>
+        <p class="text-center font-medium">Choose a service to get started</p>
+        <div class="grid grid-cols-3 w-[85dvw] gap-10 mt-10 mx-auto">
+          <div class="cards text-[#5B35D5] grid">
+            <h1 class="font-bold text-2xl">Transfer</h1>
+            <p class="text-gray-700 font-bold text-xs py-2">
+              Send money to another account quickly and securely.
+            </p>
+            <button
+              class="bg-[#5a35d528] cursor-pointer font-bold py-2 rounded-md"
+            >
+              Go to Transfer
+            </button>
+          </div>
+          <div class="cards text-[#1250d6] grid">
+            <h1 class="font-bold text-2xl">Withdraw</h1>
+            <p class="text-gray-700 font-bold text-xs py-2">
+              Withdraw cash from your account to your wallet.
+            </p>
+            <button
+              class="bg-[#1250d627] cursor-pointer font-bold py-2 rounded-md"
+            >
+              Go to Withdraw
+            </button>
+          </div>
+          <div class="cards text-[#2f8f34] grid">
+            <h1 class="font-bold text-2xl">Deposit</h1>
+            <p class="text-gray-700 font-bold text-xs py-2">
+              Deposit money into your account with ease.
+            </p>
+            <button
+              class="bg-[#2f8f3428] cursor-pointer font-bold py-2 rounded-md"
+            >
+              Go to Deposit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="activity">
+        <h1 class="font-bold text-2xl text-center hidden">
+          Please select an activity above
+        </h1>
+        <section class="deposit hidden">
+          <h1 class="font-black text-6xl text-[#2f8f34] text-center">
+            Deposit
+          </h1>
+          <label
+            class="block py-3 font-semibold text-[#17213D] text-2xl"
+            for="tr-amount-add"
+            >Enter amount you wish to deposit:</label
+          >
+          <input
+            type="number"
+            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#2f8f34]"
+            id="tr-amount-add"
+            placeholder="Minimum of $100"
+          />
+          <button
+            class="font-bold text-lg bg-[#2f8f34] my-3 px-4 py-2 rounded-2xl text-white cursor-pointer"
+            id="add-btn"
+          >
+            Deposit Amount
+          </button>
+          <p class="font-semibold text-lg" id="message"></p>
+        </section>
+        <section class="transfer">
+          <div class="form">
+            <label for="act-num">Enter account number: </label>
+            <input name="act-num" id="act-num" type="number" /><br />
+            <label for="">Select Bank:</label>
+            <select id="bank">
+              <option value="null">Select</option>
+              <option value="FCMB">FCMB</option>
+              <option value="WEMA">WEMA</option>
+              <option value="Fidelity">Fidelity</option>
+              <option value="Access">Access</option>
+            </select>
+            <button id="check-act">Check</button>
+            <p id="message"></p>
+            <button id="start-transfer" class="hidden">Next</button>
+          </div>
+          <main id="tr-screen" class="hidden style">
+            <h1>Balance: <span id="balance">5000</span></h1>
+            <label for="tr-amount">Enter amount you wish to transfer: </label>
+            <input type="number" id="tr-amount" />
+            <button id="tr-btn">Transfer</button>
+            <p id="tr-message"></p>
+          </main>
+        </section>
       </div>
     </main>
   </body>
