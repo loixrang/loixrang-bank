@@ -23,19 +23,19 @@ const elements = {
 }
 
 elements.transOp.addEventListener('click', () => {
-  test()
+  test(elements.trans)
 })
 elements.withOp.addEventListener('click', () => {
-  test()
+  test(elements.with)
 })
 elements.depOp.addEventListener('click', () => {
-  test()
+  test(elements.dep)
 })
 
-function test() {
-  console.log("working")
+function test(id) {
   elements.msg.classList.remove("hidden")
   elements.placeHolder.classList.add("hidden")
+  id.classList.remove("hidden");
 }
 
 const Persons = {
