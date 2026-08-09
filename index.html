@@ -86,11 +86,11 @@
         </div>
       </div>
       <div class="activity">
-        <h1 class="font-bold text-2xl text-center hidden">
+        <h1 id="holder-text" class="font-bold text-2xl text-center">
           Please select an activity above
         </h1>
-        <p class="font-semibold text-lg" id="message">No messages</p>
-        <section class="deposit hidden">
+        <p class="font-semibold text-lg hidden" id="message">No messages</p>
+        <section id="deposit" class="hidden">
           <h1 class="font-black text-6xl text-[#2f8f34] text-center">
             Deposit
           </h1>
@@ -112,28 +112,100 @@
             Deposit Amount
           </button>
         </section>
-        <section class="transfer form">
+        <section id="transfer" class="hidden">
           <h1 class="font-black text-6xl text-[#5B35D5] text-center">
             Transfer
           </h1>
-          <label class="block py-3 font-semibold text-[#17213D] text-2xl" for="act-num">Enter account number: </label>
-          <input class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]" name="act-num" id="act-num" type="number" />
-          <label class="block py-3 font-semibold text-[#17213D] text-2xl" for="">Select Bank:</label>
-          <select class="w-50 text-lg rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]" id="bank">
+          <label
+            class="block py-3 font-semibold text-[#17213D] text-2xl"
+            for="act-num"
+            >Enter account number:
+          </label>
+          <input
+            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
+            name="act-num"
+            id="act-num"
+            type="number"
+          />
+          <label class="block py-3 font-semibold text-[#17213D] text-2xl" for=""
+            >Select Bank:</label
+          >
+          <select
+            class="w-50 text-lg rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
+            id="bank"
+          >
             <option value="null">Select</option>
             <option value="FCMB">FCMB</option>
             <option value="WEMA">WEMA</option>
             <option value="Fidelity">Fidelity</option>
             <option value="Access">Access</option>
           </select>
-          <button class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer" id="check-act">Check</button><br>
-          <button id="start-transfer" class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer hidden ">Next</button>
+          <button
+            class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
+            id="check-act"
+          >
+            Check</button
+          ><br />
+          <button
+            id="start-transfer"
+            class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer hidden"
+          >
+            Next
+          </button>
           <div id="tr-screen" class="hidden">
-            <label class="block py-3 font-semibold text-[#17213D] text-2xl"
-            for="tr-amount-add" for="tr-amount">Enter amount you wish to transfer: </label>
-            <input class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]" type="number" id="tr-amount" />
-            <button class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer" id="tr-btn">Transfer</button>
+            <label
+              class="block py-3 font-semibold text-[#17213D] text-2xl"
+              for="tr-amount-add"
+              for="tr-amount"
+              >Enter amount you wish to transfer:
+            </label>
+            <input
+              class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
+              type="number"
+              id="tr-amount"
+            />
+            <button
+              class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
+              id="tr-btn"
+            >
+              Transfer
+            </button>
           </div>
+        </section>
+        <section id="withdraw" class="hidden">
+          <h1 class="font-black text-6xl text-[#1250d6] text-center">
+            Withdraw
+          </h1>
+          <label
+            class="block py-3 font-semibold text-[#17213D] text-2xl"
+            for="tr-amount-add"
+            for="tr-amount"
+            >Amount
+          </label>
+          <input
+            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#1250d6]"
+            type="number"
+            id="tr-amount"
+            placeholder="Enter amount"
+          />
+          <label
+            class="block py-3 font-semibold text-[#17213D] text-2xl"
+            for="tr-amount-add"
+            for="tr-amount"
+            >Pin:
+          </label>
+          <input
+            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#1250d6]"
+            type="number"
+            id="tr-amount"
+            placeholder="Enter 4-digit PIN"
+          />
+          <button
+            class="font-bold text-lg bg-[#1250d6] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
+            id="tr-btn"
+          >
+            Withdraw
+          </button>
         </section>
       </div>
     </main>
