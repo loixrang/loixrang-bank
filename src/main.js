@@ -11,10 +11,10 @@ const elements = {
   msg: $("message"),
   trMsg: $("tr-message"),
   nextBtn: $("start-transfer"),
-  trScreen: $("tr-screen")
+  trScreen: $("tr-screen"),
+  addAmount: $("tr-amount-add"),
+  addBtn: $("add-btn")
 }
-const addAmount = document.getElementById("tr-amount-add");
-const addBtn = document.getElementById("add-btn");
 
 const Persons = {
   Samuel: {
@@ -51,16 +51,16 @@ function transfer() {
   if (trAmount <= amount && trAmount >= 100) {
     newBalance = amount - trAmount
     elements.balance.textContent = `N${newBalance}`;
-    elements.trMsg.textContent = `Your transfer has been succesfull`
-    elements.trMsg.style.color = 'green'
+    elements.msg.textContent = `Your transfer has been succesfull`
+    elements.msg.style.color = 'green'
   } else if (trAmount < 100) {
-    elements.trMsg.textContent = `Your transfer is unsuccessfull!! - number below N100`
-    elements.trMsg.style.color = 'red'
+    elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
+    elements.msg.style.color = 'red'
     newBalance = amount;
     elements.balance.textContent = amount;
   } else if (trAmount > amount) {
-    elements.trMsg.textContent = `Your transfer is unsuccessfull!! - number above balance`
-    elements.trMsg.style.color = 'red'
+    elements.msg.textContent = `Your transfer is unsuccessfull!! - number above balance`
+    elements.msg.style.color = 'red'
     newBalance = amount;
     elements.balance.textContent = amount;
   }
@@ -117,11 +117,11 @@ elements.checkBtn.addEventListener('click', () => {
 //   console.log(details.bank);
 // }
 
-addBtn.addEventListener('click', () => {
-  const addValue = addAmount.value;
+elements.addBtn.addEventListener('click', () => {
+  const addValue = elements.addAmount.value;
   amount = Number(elements.balance.textContent)
 
-  if (addValue < 3000 && addValue >= 100) {
+  if (addValue <= 3000 && addValue >= 100) {
     newBalance = amount + Number(addValue)
     elements.balance.textContent = `N${newBalance}`
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
@@ -138,6 +138,6 @@ addBtn.addEventListener('click', () => {
     elements.balance.textContent = amount;
   }
   elements.balance.textContent = newBalance;
-  addAmount.value = ''
+  elements.addAmount.value = ''
 
 })
