@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .heading {
-  @apply fixed left-1/2 -translate-x-1/2 backdrop-blur-xl bg-white/60 flex justify-between items-center w-[95dvw]  my-2 drop-shadow-sm p-5 rounded-3xl z-10
+  @apply fixed left-1/2 -translate-x-1/2 backdrop-blur-xl bg-white/50 flex justify-between items-center w-[95dvw]  my-2 drop-shadow-sm p-5 rounded-3xl z-10
 }
 .banner {
   @apply bg-[#24235F] flex w-[93dvw] mx-auto rounded-2xl text-white p-7
@@ -12,9 +12,12 @@
 .interact {
   @apply pt-10
 }
+li{
+  @apply transition-all duration-300 ease-linear
+}
 
 li:hover {
-  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md
+  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md 
 }
 .cards {
   @apply bg-white rounded-xl drop-shadow-xl z-0 p-5
@@ -22,4 +25,13 @@ li:hover {
 
 .activity {
   @apply bg-white mt-10 mb-10 w-[85dvw] mx-auto rounded-2xl drop-shadow-2xl p-6
+}
+.active-trans {
+  @apply bg-[#5B35D5] text-white
+}
+.active-with {
+  @apply bg-[#1250d6] text-white
+}
+.active-dep {
+  @apply bg-[#2f8f34] text-white
 }

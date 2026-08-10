@@ -19,23 +19,53 @@ const elements = {
   trans: $("transfer"),
   with: $("withdraw"),
   dep: $("deposit"),
-  placeHolder: $("holder-text")
+  placeHolder: $("holder-text"),
+  viewBalance: $('view-balance'),
+  withAmt: $('wd-amount'),
+  withBtn: $('wd-btn'),
+  withPin: $('wd-pin')
 }
+
+const transHistory = []
+
+elements.viewBalance.addEventListener('click', () => {
+  console.log('Reddit');
+  // elements.balance.textContent = 'XXXXXXX'
+})
 
 elements.transOp.addEventListener('click', () => {
   test(elements.trans)
+  elements.dep.classList.add("hidden")
+  elements.with.classList.add("hidden")
+  bg(elements.transOp, "active-trans")
+  elements.depOp.classList.remove("active-dep")
+  elements.withOp.classList.remove("active-with")
 })
 elements.withOp.addEventListener('click', () => {
   test(elements.with)
+  elements.dep.classList.add("hidden")
+  elements.trans.classList.add("hidden")
+  bg(elements.withOp, "active-with")
+  elements.depOp.classList.remove("active-dep")
+  elements.transOp.classList.remove("active-trans")
 })
 elements.depOp.addEventListener('click', () => {
   test(elements.dep)
+  elements.with.classList.add("hidden")
+  elements.trans.classList.add("hidden")
+  bg(elements.depOp, "active-dep")
+  elements.transOp.classList.remove("active-trans")
+  elements.withOp.classList.remove("active-with")
 })
+
+function bg(element, className) {
+  element.classList.toggle(className)
+}
 
 function test(id) {
   elements.msg.classList.remove("hidden")
   elements.placeHolder.classList.add("hidden")
-  id.classList.remove("hidden");
+  id.classList.toggle("hidden");
 }
 
 const Persons = {
@@ -70,6 +100,7 @@ function deposit() {
     elements.balance.textContent = `N${newBalance}`
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
     elements.msg.style.color = 'black'
+    transHistory.push(`You deposited N${Number(addValue)}`)
   } else if (addValue > 3000) {
     elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
     elements.msg.style.color = 'red'
@@ -82,7 +113,7 @@ function deposit() {
     elements.balance.textContent = amount;
   }
   elements.balance.textContent = newBalance;
-  elements.addAmount.value = ''
+  elements.addAmount.value = '';
 }
 
 function transfer() {
@@ -99,6 +130,7 @@ function transfer() {
     elements.balance.textContent = `N${newBalance}`;
     elements.msg.textContent = `Your transfer has been succesfull`
     elements.msg.style.color = 'green'
+    transHistory.push(`You transfered N${Number(amount)}`)
   } else if (trAmount < 100) {
     elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
     elements.msg.style.color = 'red'
@@ -125,7 +157,9 @@ function checkButton() {
   } else if (selBank == 'null') {
     elements.msg.textContent = 'Please select a bank'
     elements.bankName.style.outline = '1px solid black'
-    elements.actNum.style.outline = 'none'
+    elements.bankName.style.border = '1px solid black'
+    elements.actNum.style.outline = '#5B35D5'
+    elements.actNum.style.border = '#5B35D5'
   } else {
     elements.actNum.style.outline = 'none'
     elements.bankName.style.outline = 'none'
@@ -134,8 +168,8 @@ function checkButton() {
     for (const [person, details] of Object.entries(Persons)) {
       if (actNumber == details.accountNumber && selBank == details.bank) {
         console.log('yay')
-        elements.msg.textContent = `Do you want to transfer to ${details.fullname}? If not, try again`
-
+        elements.msg.textContent = details.fullname
+        elements.msg.style.color = '#5B35D5'
         elements.nextBtn.classList.remove('hidden')
         elements.nextBtn.addEventListener('click', () => {
           elements.trScreen.classList.remove("hidden")
@@ -165,4 +199,35 @@ elements.checkBtn.addEventListener('click', () => {
 
 elements.addBtn.addEventListener('click', () => {
   deposit()
+})
+
+elements.withBtn.addEventListener('click', () => {
+  let value = Number(elements.withAmt.value);
+  let pin = Number(elements.withPin.value);
+  amount = Number(elements.balance.textContent)
+
+  if (value >= 100 && value <= amount && pin >= 1000) {
+    elements.msg.textContent = `Withdrawal of N${value} is succesful`;
+    newBalance = amount - value
+    transHistory.push(`You withdrawed N${Number(amount)}`)
+    elements.msg.style.color = 'green'
+    elements.withAmt.value = ''
+    elements.withPin.value = ''
+  } else if (value == '' || value < 100) {
+    elements.msg.textContent = 'Ensure a valid account number'
+    elements.msg.style.color = 'red'
+    return
+  } else if (pin < 1000 || pin == '') {
+    elements.msg.textContent = 'Enter a 4 digit pin'
+    elements.msg.style.color = 'red'
+    return
+  } else if (value > amount) {
+    elements.msg.textContent = `Insufficient funds`
+    elements.msg.style.color = 'red'
+    elements.withAmt.value = ''
+    elements.withPin.value = ''
+    return
+  }
+  elements.balance.textContent = newBalance;
+  console.log(transHistory)
 })

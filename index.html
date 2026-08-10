@@ -33,7 +33,10 @@
             <span class="text-gray-300">Your Balance: </span
             ><span id="balance" class="block text-3xl font-bold">5000</span>
           </p>
-          <button id="view-balance" class="bg-[#5B35D5] px-5 py-2 rounded-md cursor-pointer">
+          <button
+            id="view-balance"
+            class="bg-[#5B35D5] px-5 py-2 rounded-md cursor-pointer"
+          >
             View balance
           </button>
         </div>
@@ -50,13 +53,14 @@
           What would you like to do?
         </h1>
         <p class="text-center font-medium">Choose a service to get started</p>
-        <div class="grid grid-cols-3 w-[85dvw] gap-10 mt-10 mx-auto">
+        <div class="flex flex-wrap justify-evenly items-center mt-10">
           <div class="cards text-[#5B35D5] grid">
             <h1 class="font-bold text-2xl">Transfer</h1>
             <p class="text-gray-700 font-bold text-xs py-2">
               Send money to another account quickly and securely.
             </p>
-            <button id="transfer-op"
+            <button
+              id="transfer-op"
               class="bg-[#5a35d528] cursor-pointer font-bold py-2 rounded-md"
             >
               Go to Transfer
@@ -67,7 +71,8 @@
             <p class="text-gray-700 font-bold text-xs py-2">
               Withdraw cash from your account to your wallet.
             </p>
-            <button id="withdraw-op"
+            <button
+              id="withdraw-op"
               class="bg-[#1250d627] cursor-pointer font-bold py-2 rounded-md"
             >
               Go to Withdraw
@@ -78,7 +83,8 @@
             <p class="text-gray-700 font-bold text-xs py-2">
               Deposit money into your account with ease.
             </p>
-            <button id="deposit-op"
+            <button
+              id="deposit-op"
               class="bg-[#2f8f3428] cursor-pointer font-bold py-2 rounded-md"
             >
               Go to Deposit
@@ -90,7 +96,6 @@
         <h1 id="holder-text" class="font-bold text-2xl text-center">
           Please select an activity above
         </h1>
-        <p class="font-semibold text-lg hidden" id="message">No messages</p>
         <section id="deposit" class="hidden">
           <h1 class="font-black text-6xl text-[#2f8f34] text-center">
             Deposit
@@ -117,94 +122,107 @@
           <h1 class="font-black text-6xl text-[#5B35D5] text-center">
             Transfer
           </h1>
-          <label
-            class="block py-3 font-semibold text-[#17213D] text-2xl"
-            for="act-num"
-            >Enter account number:
-          </label>
-          <input
-            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
-            name="act-num"
-            id="act-num"
-            type="number"
-          />
-          <label class="block py-3 font-semibold text-[#17213D] text-2xl" for=""
-            >Select Bank:</label
-          >
-          <select
-            class="w-50 text-lg rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
-            id="bank"
-          >
-            <option value="null">Select</option>
-            <option value="FCMB">FCMB</option>
-            <option value="WEMA">WEMA</option>
-            <option value="Fidelity">Fidelity</option>
-            <option value="Access">Access</option>
-          </select>
-          <button
-            class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
-            id="check-act"
-          >
-            Check</button
-          ><br />
-          <button
-            id="start-transfer"
-            class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer hidden"
-          >
-            Next
-          </button>
-          <div id="tr-screen" class="hidden">
-            <label
-              class="block py-3 font-semibold text-[#17213D] text-2xl"
-              for="tr-amount"
-              >Enter amount you wish to transfer:
-            </label>
-            <input
-              class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
-              type="number"
-              id="tr-amount"
-            />
+          <div class="grid md:grid-cols-2">
+            <div class="p-5">
+              <label
+                class="block py-3 font-semibold text-[#17213D] text-2xl"
+                for="act-num"
+                >Enter account number:
+              </label>
+              <input
+                class="w-50 rounded-lg block p-2 focus:outline-none border-2 border-[#5B35D5]"
+                name="act-num"
+                id="act-num"
+                type="number"
+              />
+              <label
+                class="block py-3 font-semibold text-[#17213D] text-2xl"
+                for=""
+                >Select Bank:</label
+              >
+              <select
+                class="w-50 text-lg rounded-lg block p-2 focus:outline-none border-2 border-[#5B35D5]"
+                id="bank"
+              >
+                <option value="null">Select</option>
+                <option value="FCMB">FCMB</option>
+                <option value="WEMA">WEMA</option>
+                <option value="Fidelity">Fidelity</option>
+                <option value="Access">Access</option>
+              </select>
+              <button
+                class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
+                id="check-act"
+              >
+                Check
+              </button>
+              <button
+                id="start-transfer"
+                class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer hidden"
+              >
+                Next
+              </button>
+            </div>
+            <div id="tr-screen" class="hidden p-5">
+              <label
+                class="block py-3 font-semibold text-[#17213D] text-2xl"
+                for="tr-amount"
+                >Enter amount you wish to transfer:
+              </label>
+              <input
+                class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#5B35D5]"
+                type="number"
+                id="tr-amount"
+              />
+              <button
+                class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
+                id="tr-btn"
+              >
+                Transfer
+              </button>
+            </div>
+          </div>
+        </section>
+        <section id="withdraw" class="hidden flex items-center justify-center">
+          <div class="flex gap-3 w-1/3 flex-col items-center justify-center">
+            <h1 class="font-black text-6xl text-[#1250d6] text-center">
+              Withdraw
+            </h1>
+            <div class="flex gap-3 w-full items-center">
+              <label
+                class="font-semibold text-[#17213D] text-2xl"
+                for="wd-amount"
+                >Amount:
+              </label>
+              <input
+                class="rounded-lg block w-full p-1 focus:border-none border-2 border-[#1250d6]"
+                type="number"
+                id="wd-amount"
+                placeholder="Enter amount"
+              />
+            </div>
+            <div class="flex gap-3 w-full items-center">
+              <label
+                class="font-semibold text-[#17213D] text-2xl"
+                for="wd-pin"
+                >Pin:
+              </label>
+              <input
+                class="rounded-lg p-1 w-full focus:border-none border-2 border-[#1250d6]"
+                type="number"
+                id="wd-pin"
+                placeholder="Enter 4-digit PIN"
+              />
+            </div>
             <button
-              class="font-bold text-lg bg-[#5B35D5] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
-              id="tr-btn"
+              class="font-bold text-lg w-full bg-[#1250d6] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
+              id="wd-btn"
             >
-              Transfer
+              Withdraw
             </button>
           </div>
         </section>
-        <section id="withdraw" class="hidden">
-          <h1 class="font-black text-6xl text-[#1250d6] text-center">
-            Withdraw
-          </h1>
-          <label
-            class="block py-3 font-semibold text-[#17213D] text-2xl"
-            for="wd-amount"
-            >Amount
-          </label>
-          <input
-            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#1250d6]"
-            type="number"
-            id="wd-amount"
-            placeholder="Enter amount"
-          />
-          <label
-            class="block py-3 font-semibold text-[#17213D] text-2xl"
-            for="wd-pin"
-            >Pin:
-          </label>
-          <input
-            class="w-50 rounded-lg block p-2 focus:border-none border-2 border-[#1250d6]"
-            type="number"
-            id="wd-pin"
-            placeholder="Enter 4-digit PIN"
-          />
-          <button
-            class="font-bold text-lg bg-[#1250d6] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
-            id="wd-btn"
-          >
-            Withdraw
-          </button>
-        </section>
+        <p class="font-semibold text-lg hidden pl-3" id="message"></p>
       </div>
     </main>
   </body>
