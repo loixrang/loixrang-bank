@@ -140,7 +140,7 @@ function transfer() {
     elements.balance.textContent = `N${newBalance}`;
     elements.msg.textContent = `Your transfer has been succesfull`
     elements.msg.style.color = 'green'
-    transHistory.push(`You transfered N${Number(amount)}`)
+    transHistory.push(`You transfered N${Number(trAmount)}`)
     console.log(transHistory)
   } else if (trAmount < 100) {
     elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
@@ -220,12 +220,12 @@ elements.withBtn.addEventListener('click', () => {
   if (value >= 100 && value <= amount && pin >= 1000) {
     elements.msg.textContent = `Withdrawal of N${value} is succesful`;
     newBalance = amount - value
-    transHistory.push(`You withdrawed N${Number(amount)}`)
+    transHistory.push(`You withdrawed N${Number(value)}`)
     elements.msg.style.color = 'green'
     elements.withAmt.value = ''
     elements.withPin.value = ''
   } else if (value == '' || value < 100) {
-    elements.msg.textContent = 'Ensure a valid account number'
+    elements.msg.textContent = 'Ensure a amount'
     elements.msg.style.color = 'red'
     return
   } else if (pin < 1000 || pin == '') {
@@ -253,6 +253,7 @@ elements.homePage.addEventListener('click', () => {
   elements.msg.classList.add("hidden")
 })
 
+//Transaction History
 elements.recentActBtn.addEventListener('click', () => {
   elements.placeHolder.classList.add("hidden")
   elements.recentActBtn.classList.add("active-link")
@@ -266,12 +267,25 @@ elements.recentActBtn.addEventListener('click', () => {
     elements.msg.style.textAlign = 'Center'
     elements.msg.style.padding = '2em'
   } else {
-    for (let i = 0; i < transHistory.length; i++) {
-      const list = document.createElement('li');
-      list.textContent = transHistory[i]
+    elements.listRecent.textContent = ''
+    // for (let i = 0; i < transHistory.length; i++) {
+    //   list.textContent = transHistory[i]
+    //   elements.listRecent.append(list)
+    //   elements.msg.classList.add("hidden")
+    //   console.log(list.textContent)
+    //   console.log(list)
+    // }
+    // transHistory.forEach(transaction => {
+    //   elements.msg.classList.add("hidden")
+    //   const list = document.createElement('li')
+    //   list.textContent = transaction
+    //   elements.listRecent.appendChild(list)
+    // })
+    for (let i = transHistory.length - 1; i >= 0; i--) {
       elements.msg.classList.add("hidden")
-      console.log(list.textContent)
-      console.log(list)
+      const list = document.createElement('li')
+      list.textContent = transHistory[i]
+      elements.listRecent.appendChild(list)
     }
   }
 })
