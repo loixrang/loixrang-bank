@@ -15,10 +15,10 @@
           <mark class="text-purple-700 bg-transparent">Loixrang</mark> Bank
         </h1>
         <ul class="flex gap-5">
-          <li class="active-link"><a href="">Home</a></li>
-          <li><a href="">Transactions</a></li>
-          <li><a href="">Profile</a></li>
-          <li><a href="">Logout</a></li>
+          <li id="homePage" class="active-link">Home</li>
+          <li id="transHistory">Transactions</li>
+          <li>Profile</li>
+          <li>Logout</li>
         </ul>
       </header>
     </div>
@@ -221,6 +221,14 @@
               Withdraw
             </button>
           </div>
+        </section>
+        <section id="history" class="hidden p-5">
+          <h1 class="font-black text-6xl text-[#17213D] text-center">
+            Transactions
+          </h1>
+          <ul id="list">
+
+          </ul>
         </section>
         <p class="font-semibold text-lg hidden pl-3" id="message"></p>
       </div>

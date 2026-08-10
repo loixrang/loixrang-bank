@@ -23,7 +23,11 @@ const elements = {
   viewBalance: $('view-balance'),
   withAmt: $('wd-amount'),
   withBtn: $('wd-btn'),
-  withPin: $('wd-pin')
+  withPin: $('wd-pin'),
+  recentActBtn: $("transHistory"),
+  listRecent: $("list"),
+  recentHistory: $("history"),
+  homePage: $("homePage")
 }
 
 const transHistory = []
@@ -34,38 +38,30 @@ elements.viewBalance.addEventListener('click', () => {
 })
 
 elements.transOp.addEventListener('click', () => {
-  test(elements.trans)
-  elements.dep.classList.add("hidden")
-  elements.with.classList.add("hidden")
-  bg(elements.transOp, "active-trans")
-  elements.depOp.classList.remove("active-dep")
-  elements.withOp.classList.remove("active-with")
+  activityBtn(elements.trans, elements.dep, elements.with, elements.transOp, elements.depOp, elements.withOp, "active-trans", "active-dep", "active-with")
 })
 elements.withOp.addEventListener('click', () => {
-  test(elements.with)
-  elements.dep.classList.add("hidden")
-  elements.trans.classList.add("hidden")
-  bg(elements.withOp, "active-with")
-  elements.depOp.classList.remove("active-dep")
-  elements.transOp.classList.remove("active-trans")
+  activityBtn(elements.with, elements.dep, elements.trans, elements.withOp, elements.depOp, elements.transOp, "active-with", "active-dep", "active-trans")
 })
 elements.depOp.addEventListener('click', () => {
-  test(elements.dep)
-  elements.with.classList.add("hidden")
-  elements.trans.classList.add("hidden")
-  bg(elements.depOp, "active-dep")
-  elements.transOp.classList.remove("active-trans")
-  elements.withOp.classList.remove("active-with")
+  activityBtn(elements.dep, elements.with, elements.trans, elements.depOp, elements.withOp, elements.transOp, "active-dep", "active-with", "active-trans")
 })
 
-function bg(element, className) {
-  element.classList.toggle(className)
-}
-
-function test(id) {
+function activityBtn(element1, element2, element3, element1a, element2a, element3a, class1, class2, class3) {
   elements.msg.classList.remove("hidden")
+  elements.msg.textContent = ''
   elements.placeHolder.classList.add("hidden")
-  id.classList.toggle("hidden");
+  element1.classList.toggle("hidden")
+  element2.classList.add("hidden")
+  element3.classList.add("hidden")
+  element1a.classList.toggle(class1)
+  element2a.classList.remove(class2)
+  element3a.classList.remove(class3)
+  elements.recentHistory.classList.add("hidden")
+  elements.recentActBtn.classList.remove("active-link")
+  elements.homePage.classList.remove("active-link")
+  elements.msg.style.textAlign = 'left'
+  elements.msg.style.padding = '0'
 }
 
 const Persons = {
@@ -91,6 +87,19 @@ const Persons = {
   }
 }
 
+function test() {
+  console.log("working")
+}
+
+function clr() {
+  elements.dep.classList.add("hidden")
+  elements.trans.classList.add("hidden")
+  elements.with.classList.add("hidden")
+  elements.depOp.classList.remove("active-dep")
+  elements.withOp.classList.remove("active-with")
+  elements.transOp.classList.remove("active-trans")
+}
+
 function deposit() {
   const addValue = elements.addAmount.value;
   amount = Number(elements.balance.textContent)
@@ -101,6 +110,7 @@ function deposit() {
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
     elements.msg.style.color = 'black'
     transHistory.push(`You deposited N${Number(addValue)}`)
+    console.log(transHistory)
   } else if (addValue > 3000) {
     elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
     elements.msg.style.color = 'red'
@@ -131,6 +141,7 @@ function transfer() {
     elements.msg.textContent = `Your transfer has been succesfull`
     elements.msg.style.color = 'green'
     transHistory.push(`You transfered N${Number(amount)}`)
+    console.log(transHistory)
   } else if (trAmount < 100) {
     elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
     elements.msg.style.color = 'red'
@@ -230,4 +241,37 @@ elements.withBtn.addEventListener('click', () => {
   }
   elements.balance.textContent = newBalance;
   console.log(transHistory)
+})
+
+elements.homePage.addEventListener('click', () => {
+  elements.homePage.classList.add("active-link")
+  elements.recentActBtn.classList.remove("active-link")
+  elements.placeHolder.classList.remove("hidden")
+  elements.recentHistory.classList.add("hidden")
+  clr()
+  elements.msg.textContent = ''
+  elements.msg.classList.add("hidden")
+})
+
+elements.recentActBtn.addEventListener('click', () => {
+  elements.placeHolder.classList.add("hidden")
+  elements.recentActBtn.classList.add("active-link")
+  elements.homePage.classList.remove("active-link")
+  elements.recentHistory.classList.remove("hidden")
+  clr()
+  const list = document.createElement('li');
+  if (transHistory.length < 1) {
+    elements.msg.classList.remove("hidden")
+    elements.msg.textContent = `You have no recent activity`
+    elements.msg.style.textAlign = 'Center'
+    elements.msg.style.padding = '2em'
+  } else {
+    for (let i = 0; i < transHistory.length; i++) {
+      const list = document.createElement('li');
+      list.textContent = transHistory[i]
+      elements.msg.classList.add("hidden")
+      console.log(list.textContent)
+      console.log(list)
+    }
+  }
 })

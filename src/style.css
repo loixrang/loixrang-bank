@@ -17,14 +17,14 @@ li{
 }
 
 li:hover {
-  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md 
+  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md cursor-pointer
 }
 .cards {
   @apply bg-white rounded-xl drop-shadow-xl z-0 p-5
 }
 
 .activity {
-  @apply bg-white mt-10 mb-10 w-[85dvw] mx-auto rounded-2xl drop-shadow-2xl p-6
+  @apply bg-white mt-10 mb-20 w-[85dvw] mx-auto rounded-2xl drop-shadow-2xl p-6
 }
 .active-trans {
   @apply bg-[#5B35D5] text-white
@@ -34,4 +34,25 @@ li:hover {
 }
 .active-dep {
   @apply bg-[#2f8f34] text-white
+}
+
+#transfer-op:hover {
+  @apply bg-[#5B35D5] text-white transition-all duration-300 ease-linear
+}
+#withdraw-op:hover {
+  @apply bg-[#1250d6] text-white transition-all duration-300 ease-linear
+}
+#deposit-op:hover {
+  @apply bg-[#2f8f34] text-white transition-all duration-300 ease-linear
+}
+
+#list {
+  @apply grid gap-2 mt-3 text-[#17213D]
+}
+
+#list li {
+  @apply bg-transparent border-t border-b p-1
+}
+#list li:hover {
+  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md
 }
