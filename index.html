@@ -10,11 +10,43 @@
   </head>
   <body class="bg-[#F7F8FC]">
     <div class="h-40">
-      <header class="heading">
+      <header class="heading grid grid-cols-1">
         <h1 class="font-bold text-2xl">
           <mark class="text-purple-700 bg-transparent">Loixrang</mark> Bank
         </h1>
-        <ul class="flex gap-5">
+        <nav
+          class="sm:hidden grid grid-rows-1 relative items-center justify-center gap-2"
+        >
+          <button
+            id="hamMenu"
+            class="cursor-pointer flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+          <ul
+            id="mobile-menu"
+            class="hidden absolute bg-white w-30 p-2 right-0 rounded-xl top-15"
+          >
+            <li id="homePage" class="active-link">Home</li>
+            <li class="my-1" id="transHistory">Transactions</li>
+            <li>Profile</li>
+            <li>Logout</li>
+          </ul>
+        </nav>
+        <ul class="hidden sm:flex gap-5">
           <li id="homePage" class="active-link">Home</li>
           <li id="transHistory">Transactions</li>
           <li>Profile</li>
@@ -97,7 +129,7 @@
           Please select an activity above
         </h1>
         <section id="deposit" class="hidden">
-          <h1 class="font-black text-6xl text-[#2f8f34] text-center">
+          <h1 class="font-black text-3xl sm:text-6xl text-[#2f8f34] text-center">
             Deposit
           </h1>
           <label
@@ -119,18 +151,18 @@
           </button>
         </section>
         <section id="transfer" class="hidden">
-          <h1 class="font-black text-6xl text-[#5B35D5] text-center">
+          <h1 class="font-black text-3xl sm:text-6xl text-[#5B35D5] text-center">
             Transfer
           </h1>
           <div class="grid md:grid-cols-2">
-            <div class="p-5">
+            <div class="sm:p-5 p-0">
               <label
                 class="block py-3 font-semibold text-[#17213D] text-2xl"
                 for="act-num"
                 >Enter account number:
               </label>
               <input
-                class="w-50 rounded-lg block p-2 focus:outline-none border-2 border-[#5B35D5]"
+                class="sm:w-50 w-full rounded-lg block p-1 sm:p-2 focus:outline-none border-2 border-[#5B35D5]"
                 name="act-num"
                 id="act-num"
                 type="number"
@@ -163,7 +195,7 @@
                 Next
               </button>
             </div>
-            <div id="tr-screen" class="hidden p-5">
+            <div id="tr-screen" class="hidden sm:p-5 p-0">
               <label
                 class="block py-3 font-semibold text-[#17213D] text-2xl"
                 for="tr-amount"
@@ -183,52 +215,44 @@
             </div>
           </div>
         </section>
-        <section id="withdraw" class="hidden flex items-center justify-center">
-          <div class="flex gap-3 w-1/3 flex-col items-center justify-center">
-            <h1 class="font-black text-6xl text-[#1250d6] text-center">
-              Withdraw
-            </h1>
-            <div class="flex gap-3 w-full items-center">
-              <label
-                class="font-semibold text-[#17213D] text-2xl"
-                for="wd-amount"
-                >Amount:
-              </label>
-              <input
-                class="rounded-lg block w-full p-1 focus:border-none border-2 border-[#1250d6]"
-                type="number"
-                id="wd-amount"
-                placeholder="Enter amount"
-              />
-            </div>
-            <div class="flex gap-3 w-full items-center">
-              <label
-                class="font-semibold text-[#17213D] text-2xl"
-                for="wd-pin"
-                >Pin:
-              </label>
-              <input
-                class="rounded-lg p-1 w-full focus:border-none border-2 border-[#1250d6]"
-                type="number"
-                id="wd-pin"
-                placeholder="Enter 4-digit PIN"
-              />
-            </div>
-            <button
-              class="font-bold text-lg w-full bg-[#1250d6] my-3 px-4 py-2 rounded-lg text-white cursor-pointer"
-              id="wd-btn"
-            >
-              Withdraw
-            </button>
+        <section id="withdraw" class="hidden">
+          <h1 class="font-black mb-2 text-3xl sm:text-6xl text-[#1250d6] text-center">
+            Withdraw
+          </h1>
+          <div class="grid gap-3 mb-2 w-full items-center sm:w-1/3">
+            <label class="font-semibold text-[#17213D] text-2xl" for="wd-amount"
+              >Amount:
+            </label>
+            <input
+              class="rounded-lg block w-full p-1 focus:border-none border-2 border-[#1250d6]"
+              type="number"
+              id="wd-amount"
+              placeholder="Enter amount"
+            />
           </div>
+          <div class="grid gap-3 w-full items-center sm:w-1/3">
+            <label class="font-semibold text-[#17213D] text-2xl" for="wd-pin"
+              >Pin:
+            </label>
+            <input
+              class="rounded-lg p-1 w-full focus:border-none border-2 border-[#1250d6]"
+              type="number"
+              id="wd-pin"
+              placeholder="Enter 4-digit PIN"
+            />
+          </div>
+          <button
+            class="font-bold text-lg w-full bg-[#1250d6] my-3 px-4 py-2 rounded-lg text-white cursor-pointer sm:w-1/5"
+            id="wd-btn"
+          >
+            Withdraw
+          </button>
         </section>
         <section id="history" class="hidden p-5">
-          <h1 class="font-black text-6xl text-[#17213D] text-center">
+          <h1 class="font-black text-2xl sm:text-6xl w-full text-[#17213D] text-center">
             Transactions
           </h1>
-          <ul id="list">
-
-          </ul>
+          <ul id="list"></ul>
         </section>
         <p class="font-semibold text-lg hidden pl-3" id="message"></p>
       </div>
