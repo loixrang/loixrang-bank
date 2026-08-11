@@ -40,6 +40,7 @@ const elements = {
   userNameValue: $("user-name-value"),
   loginBalance: $("balance-value"),
   balance: $("balance"),
+  logOut: document.querySelectorAll('.logout')
 }
 
 elements.loginPageBtn.addEventListener('click', () => {
@@ -328,4 +329,11 @@ function transactions(btn, page) {
 
 elements.recentActBtnMobile.addEventListener('click', () => {
   transactions(elements.recentActBtnMobile, elements.homePageMobile)
+})
+
+elements.logOut.forEach(logout => {
+  logout.addEventListener('click', () => {
+    test()
+    
+  })
 })
