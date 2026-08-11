@@ -1,7 +1,7 @@
-let amount;
+let amount = JSON.parse(localStorage.getItem("balance"));
 let newBalance;
-let startBalance;
-let userName;
+let loginStatus = JSON.parse(localStorage.getItem('loggedIn'));
+let userName = localStorage.getItem("name")
 const $ = id => document.getElementById(id);
 const elements = {
   transferAmount: $("tr-amount"),
@@ -43,13 +43,47 @@ const elements = {
   logOut: document.querySelectorAll('.logout')
 }
 
-elements.loginPageBtn.addEventListener('click', () => {
-  userName = elements.loginUsername.value
-  elements.userNameValue.textContent = userName;
-  startBalance = elements.loginBalance.value;
-  elements.balance.textContent = startBalance
+
+if (loginStatus) {
   elements.loginPage.classList.add("hidden");
-  elements.mainPage.classList.remove("hidden")
+  elements.mainPage.classList.remove("hidden");
+  elements.balance.textContent = amount;
+  elements.userNameValue.textContent = userName
+} else {
+  elements.loginPage.classList.remove("hidden");
+  elements.mainPage.classList.add("hidden")
+}
+
+
+elements.loginPageBtn.addEventListener('click', () => {
+  const initUserName = elements.loginUsername.value;
+  const initUserBalance = Number(elements.loginBalance.value);
+  if (initUserBalance == '' && initUserName == '') {
+    console.log("Empty string, try again")
+    elements.loginUsername.style.outline = '2px solid red'
+    elements.loginBalance.style.outline = '2px solid red'
+    console.log(initUserName)
+    console.log(initUserBalance)
+    return
+  }
+  if (/\d/.test(initUserName)) {
+    elements.loginUsername.style.outline = '2px solid red'
+    elements.loginBalance.style.outline = 'none'
+    return
+  } else if (isNaN(initUserBalance)) {
+    elements.loginBalance.style.outline = '2px solid red'
+    elements.loginUsername.style.outline = 'none'
+    return
+  } else {
+    let loggedIn = true;
+    elements.userNameValue.textContent = initUserName;
+    elements.balance.textContent = initUserBalance;
+    elements.loginPage.classList.add("hidden");
+    elements.mainPage.classList.remove("hidden")
+    localStorage.setItem("name", initUserName)
+    localStorage.setItem("balance", JSON.stringify(initUserBalance));
+    localStorage.setItem("loggedIn", JSON.stringify(loggedIn))
+  }
 })
 
 elements.hamburgerMenuBtn.addEventListener('click', () => {
@@ -137,59 +171,59 @@ function clr() {
 
 function deposit() {
   const addValue = elements.addAmount.value;
-  amount = Number(elements.balance.textContent)
+  amount = JSON.parse(localStorage.getItem("balance"));
+  console.log(amount)
 
-  if (addValue <= 3000 && addValue >= 100) {
+  if (addValue > 3000) {
+    elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
+    elements.msg.style.color = 'red'
+    return
+  } else if (addValue < 100) {
+    elements.msg.textContent = `Unsuccessful, your amount is below N100`
+    elements.msg.style.color = 'red'
+    return
+  } else if (addValue <= 3000 && addValue >= 100) {
     newBalance = amount + Number(addValue)
     elements.balance.textContent = `N${newBalance}`
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
     elements.msg.style.color = 'black'
     transHistory.push(`You deposited N${Number(addValue)}`)
+    elements.balance.textContent = newBalance;
+    localStorage.setItem("balance", JSON.stringify(newBalance))
+    elements.addAmount.value = '';
     console.log(transHistory)
-  } else if (addValue > 3000) {
-    elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
-    elements.msg.style.color = 'red'
-    newBalance = amount;
-    elements.balance.textContent = amount;
-  } else if (addValue < 100) {
-    elements.msg.textContent = `Unsuccessful, your amount is below N100`
-    elements.msg.style.color = 'red'
-    newBalance = amount;
-    elements.balance.textContent = amount;
   }
-  elements.balance.textContent = newBalance;
-  elements.addAmount.value = '';
 }
 
 function transfer() {
   const trAmount = elements.transferAmount.value;
-  amount = Number(elements.balance.textContent);
+  amount = JSON.parse(localStorage.getItem("balance"));
+  console.log(amount)
 
   if (amount == 0) {
     elements.transferAmount.disabled = 'true'
     return elements.trMsg.textContent = `You have no money, fam`
   }
 
-  if (trAmount <= amount && trAmount >= 100) {
+  if (trAmount < 100) {
+    elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
+    elements.msg.style.color = 'red'
+    return
+  } else if (trAmount > amount) {
+    elements.msg.textContent = `Your transfer is unsuccessfull!! - number above balance`
+    elements.msg.style.color = 'red'
+    return
+  } else if (trAmount <= amount && trAmount >= 100) {
     newBalance = amount - trAmount
     elements.balance.textContent = `N${newBalance}`;
     elements.msg.textContent = `Your transfer has been succesfull`
     elements.msg.style.color = 'green'
     transHistory.push(`You transfered N${Number(trAmount)}`)
+    elements.balance.textContent = newBalance;
+    localStorage.setItem("balance", JSON.stringify(newBalance))
+    elements.transferAmount.value = ''
     console.log(transHistory)
-  } else if (trAmount < 100) {
-    elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
-    elements.msg.style.color = 'red'
-    newBalance = amount;
-    elements.balance.textContent = amount;
-  } else if (trAmount > amount) {
-    elements.msg.textContent = `Your transfer is unsuccessfull!! - number above balance`
-    elements.msg.style.color = 'red'
-    newBalance = amount;
-    elements.balance.textContent = amount;
   }
-  elements.balance.textContent = newBalance;
-  elements.transferAmount.value = ''
 }
 
 function checkButton() {
@@ -227,6 +261,7 @@ function checkButton() {
       } else {
         elements.msg.textContent = `The account doesn't exist`
         console.log('ney')
+        return
       }
     }
   }
@@ -250,7 +285,8 @@ elements.addBtn.addEventListener('click', () => {
 elements.withBtn.addEventListener('click', () => {
   let value = Number(elements.withAmt.value);
   let pin = Number(elements.withPin.value);
-  amount = Number(elements.balance.textContent)
+  amount = JSON.parse(localStorage.getItem("balance"));
+  console.log(amount)
 
   if (value >= 100 && value <= amount && pin >= 1000) {
     elements.msg.textContent = `Withdrawal of N${value} is succesful`;
@@ -260,7 +296,7 @@ elements.withBtn.addEventListener('click', () => {
     elements.withAmt.value = ''
     elements.withPin.value = ''
   } else if (value == '' || value < 100) {
-    elements.msg.textContent = 'Ensure a amount'
+    elements.msg.textContent = 'Ensure to enter an amount'
     elements.msg.style.color = 'red'
     return
   } else if (pin < 1000 || pin == '') {
@@ -275,6 +311,7 @@ elements.withBtn.addEventListener('click', () => {
     return
   }
   elements.balance.textContent = newBalance;
+  localStorage.setItem("balance", JSON.stringify(newBalance))
   console.log(transHistory)
 })
 
@@ -334,6 +371,6 @@ elements.recentActBtnMobile.addEventListener('click', () => {
 elements.logOut.forEach(logout => {
   logout.addEventListener('click', () => {
     test()
-    
+
   })
 })
