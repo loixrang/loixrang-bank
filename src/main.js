@@ -1,9 +1,10 @@
 let amount;
 let newBalance;
+let startBalance;
+let userName;
 const $ = id => document.getElementById(id);
 const elements = {
   transferAmount: $("tr-amount"),
-  balance: $("balance"),
   btn: $("tr-btn"),
   actNum: $("act-num"),
   bankName: $("bank"),
@@ -29,11 +30,34 @@ const elements = {
   recentHistory: $("history"),
   homePage: $("homePage"),
   hamburgerMenuBtn: $("hamMenu"),
-  hamburgerMenu: $("mobile-menu")
+  hamburgerMenu: $("mobile-menu"),
+  loginPageBtn: $("login-btn"),
+  loginPage: $("loginPage"),
+  mainPage: $("main"),
+  loginUsername: $("username"),
+  userNameValue: $("user-name-value"),
+  loginBalance: $("balance-value"),
+  balance: $("balance"),
 }
+
+elements.loginPageBtn.addEventListener('click', () => {
+  userName = elements.loginUsername.value
+  elements.userNameValue.textContent = userName;
+  startBalance = elements.loginBalance.value;
+  elements.balance.textContent = startBalance
+  elements.loginPage.classList.add("hidden");
+  elements.mainPage.classList.remove("hidden")
+  console.log(userName, startBalance)
+})
 
 elements.hamburgerMenuBtn.addEventListener('click', () => {
   test()
+  elements.hamburgerMenu.innerHTML = `
+    <li id="homePage">Home</li>
+    <li class="my-1" id="transHistory">Transactions</li>
+    <li>Profile</li>
+    <li>Logout</li>
+  `
   elements.hamburgerMenu.classList.toggle('hidden')
 })
 elements.hamburgerMenu.addEventListener('click', () => {
@@ -270,6 +294,7 @@ elements.homePage.addEventListener('click', () => {
 
 //Transaction History
 elements.recentActBtn.addEventListener('click', () => {
+  test()
   elements.placeHolder.classList.add("hidden")
   elements.recentActBtn.classList.add("active-link")
   elements.homePage.classList.remove("active-link")

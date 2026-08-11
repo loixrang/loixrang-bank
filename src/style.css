@@ -1,5 +1,11 @@
 @import "tailwindcss";
-
+@font-face {
+  font-family: Inter;
+  src: url(/src/assets/fonts/Inter-VariableFont_opsz\,wght.ttf);
+}
+body {
+  font-family: Inter;
+}
 .heading {
   @apply fixed left-1/2 -translate-x-1/2 backdrop-blur-xl bg-white/40 flex justify-between items-center w-[95dvw]  my-2 drop-shadow-sm p-5 rounded-3xl z-10
 }
