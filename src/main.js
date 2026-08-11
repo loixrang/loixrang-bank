@@ -104,6 +104,11 @@ const transHistory = []
 elements.viewBalance.addEventListener('click', () => {
   console.log('Reddit');
   // elements.balance.textContent = 'XXXXXXX'
+  if (elements.balance.textContent == 'xxxxxx') {
+    elements.balance.textContent = JSON.parse(localStorage.getItem("balance"));
+  } else {
+    elements.balance.textContent = 'xxxxxx'
+  }
 })
 
 elements.transOp.addEventListener('click', () => {
@@ -370,7 +375,8 @@ elements.recentActBtnMobile.addEventListener('click', () => {
 
 elements.logOut.forEach(logout => {
   logout.addEventListener('click', () => {
-    test()
-
+    localStorage.clear()
+    elements.loginPage.classList.remove("hidden");
+    elements.mainPage.classList.add("hidden")
   })
 })
