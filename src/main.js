@@ -60,11 +60,8 @@ elements.loginPageBtn.addEventListener('click', () => {
   const initUserName = elements.loginUsername.value;
   const initUserBalance = Number(elements.loginBalance.value);
   if (initUserBalance == '' && initUserName == '') {
-    console.log("Empty string, try again")
     elements.loginUsername.style.outline = '2px solid red'
     elements.loginBalance.style.outline = '2px solid red'
-    console.log(initUserName)
-    console.log(initUserBalance)
     return
   }
   if (/\d/.test(initUserName)) {
@@ -88,7 +85,6 @@ elements.loginPageBtn.addEventListener('click', () => {
 })
 
 elements.hamburgerMenuBtn.addEventListener('click', () => {
-  test()
   elements.hamburgerMenu.classList.toggle('hidden')
 })
 elements.hamburgerMenu.addEventListener('click', () => {
@@ -102,7 +98,6 @@ document.addEventListener("click", (e) => {
 
 
 elements.viewBalance.addEventListener('click', () => {
-  console.log('Reddit');
   // elements.balance.textContent = 'XXXXXXX'
   if (elements.balance.textContent == 'xxxxxx') {
     elements.balance.textContent = JSON.parse(localStorage.getItem("balance"));
@@ -177,7 +172,6 @@ function clr() {
 function deposit() {
   const addValue = elements.addAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
-  console.log(amount)
 
   if (addValue > 3000) {
     elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
@@ -197,14 +191,12 @@ function deposit() {
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
     elements.addAmount.value = '';
-    console.log(transHistory)
   }
 }
 
 function transfer() {
   const trAmount = elements.transferAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
-  console.log(amount)
 
   if (amount == 0) {
     elements.transferAmount.disabled = 'true'
@@ -229,7 +221,6 @@ function transfer() {
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
     elements.transferAmount.value = ''
-    console.log(transHistory)
   }
 }
 
@@ -254,7 +245,6 @@ function checkButton() {
 
     for (const [person, details] of Object.entries(Persons)) {
       if (actNumber == details.accountNumber && selBank == details.bank) {
-        console.log('yay')
         elements.msg.textContent = details.fullname
         elements.msg.style.color = '#5B35D5'
         elements.nextBtn.classList.remove('hidden')
@@ -267,7 +257,6 @@ function checkButton() {
         return
       } else {
         elements.msg.textContent = `The account doesn't exist`
-        console.log('ney')
         return
       }
     }
@@ -278,13 +267,6 @@ elements.checkBtn.addEventListener('click', () => {
   checkButton()
 })
 
-// for (const [person, details] of Object.entries(Persons)) {
-//   console.log(person);
-//   console.log(details.fullname);
-//   console.log(details.accountNumber);
-//   console.log(details.bank);
-// }
-
 elements.addBtn.addEventListener('click', () => {
   deposit()
 })
@@ -293,7 +275,6 @@ elements.withBtn.addEventListener('click', () => {
   let value = Number(elements.withAmt.value);
   let pin = Number(elements.withPin.value);
   amount = JSON.parse(localStorage.getItem("balance"));
-  console.log(amount)
 
   if (value == '' || value < 100) {
     elements.msg.textContent = 'Ensure to enter an amount'
@@ -319,7 +300,6 @@ elements.withBtn.addEventListener('click', () => {
     elements.balance.textContent = newBalance;
     localStorage.setItem("history", JSON.stringify(transHistory))
     localStorage.setItem("balance", JSON.stringify(newBalance))
-    console.log(transHistory)
   } 
 })
 
@@ -350,7 +330,6 @@ elements.recentActBtn.addEventListener('click', () => {
 
 function transactions(btn, page) {
   transHistory = JSON.parse(localStorage.getItem("history")) || []
-  test()
   elements.placeHolder.classList.add("hidden")
   btn.classList.add("active-link")
   page.classList.remove("active-link")
