@@ -260,7 +260,7 @@ function checkButton() {
       } else {
         elements.msg.textContent = `The account doesn't exist`
         return
-      }
+      }        
     }
   }
 }
@@ -337,14 +337,13 @@ function transactions(btn, page) {
   page.classList.remove("active-link")
   elements.recentHistory.classList.remove("hidden")
   clr()
-  const list = document.createElement('li');
+  elements.listRecent.textContent = ''
   if (transHistory.length < 1) {
     elements.msg.classList.remove("hidden")
     elements.msg.textContent = `You have no recent activity`
     elements.msg.style.textAlign = 'Center'
     elements.msg.style.padding = '2em'
   } else {
-    elements.listRecent.textContent = ''
     for (let i = transHistory.length - 1; i >= 0; i--) {
       elements.msg.classList.add("hidden")
       const list = document.createElement('li')
