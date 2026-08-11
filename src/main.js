@@ -128,7 +128,9 @@ function activityBtn(element1, element2, element3, element1a, element2a, element
   element3a.classList.remove(class3)
   elements.recentHistory.classList.add("hidden")
   elements.recentActBtn.classList.remove("active-link")
+  elements.recentActBtnMobile.classList.remove("active-link")
   elements.homePage.classList.remove("active-link")
+  elements.homePageMobile.classList.remove("active-link")
   elements.msg.style.textAlign = 'left'
   elements.msg.style.padding = '0'
 }
