@@ -26,9 +26,11 @@ const elements = {
   withBtn: $('wd-btn'),
   withPin: $('wd-pin'),
   recentActBtn: $("transHistory"),
+  recentActBtnMobile: $("transHistory-mobile"),
   listRecent: $("list"),
   recentHistory: $("history"),
   homePage: $("homePage"),
+  homePageMobile: $("homePage-mobile"),
   hamburgerMenuBtn: $("hamMenu"),
   hamburgerMenu: $("mobile-menu"),
   loginPageBtn: $("login-btn"),
@@ -47,17 +49,10 @@ elements.loginPageBtn.addEventListener('click', () => {
   elements.balance.textContent = startBalance
   elements.loginPage.classList.add("hidden");
   elements.mainPage.classList.remove("hidden")
-  console.log(userName, startBalance)
 })
 
 elements.hamburgerMenuBtn.addEventListener('click', () => {
   test()
-  elements.hamburgerMenu.innerHTML = `
-    <li id="homePage">Home</li>
-    <li class="my-1" id="transHistory">Transactions</li>
-    <li>Profile</li>
-    <li>Logout</li>
-  `
   elements.hamburgerMenu.classList.toggle('hidden')
 })
 elements.hamburgerMenu.addEventListener('click', () => {
@@ -292,12 +287,26 @@ elements.homePage.addEventListener('click', () => {
   elements.msg.classList.add("hidden")
 })
 
+elements.homePageMobile.addEventListener('click', () => {
+  elements.homePageMobile.classList.add("active-link")
+  elements.recentActBtnMobile.classList.remove("active-link")
+  elements.placeHolder.classList.remove("hidden")
+  elements.recentHistory.classList.add("hidden")
+  clr()
+  elements.msg.textContent = ''
+  elements.msg.classList.add("hidden")
+})
+
 //Transaction History
 elements.recentActBtn.addEventListener('click', () => {
+  transactions(elements.recentActBtn, elements.homePage)
+})
+
+function transactions(btn, page) {
   test()
   elements.placeHolder.classList.add("hidden")
-  elements.recentActBtn.classList.add("active-link")
-  elements.homePage.classList.remove("active-link")
+  btn.classList.add("active-link")
+  page.classList.remove("active-link")
   elements.recentHistory.classList.remove("hidden")
   clr()
   const list = document.createElement('li');
@@ -308,19 +317,6 @@ elements.recentActBtn.addEventListener('click', () => {
     elements.msg.style.padding = '2em'
   } else {
     elements.listRecent.textContent = ''
-    // for (let i = 0; i < transHistory.length; i++) {
-    //   list.textContent = transHistory[i]
-    //   elements.listRecent.append(list)
-    //   elements.msg.classList.add("hidden")
-    //   console.log(list.textContent)
-    //   console.log(list)
-    // }
-    // transHistory.forEach(transaction => {
-    //   elements.msg.classList.add("hidden")
-    //   const list = document.createElement('li')
-    //   list.textContent = transaction
-    //   elements.listRecent.appendChild(list)
-    // })
     for (let i = transHistory.length - 1; i >= 0; i--) {
       elements.msg.classList.add("hidden")
       const list = document.createElement('li')
@@ -328,4 +324,8 @@ elements.recentActBtn.addEventListener('click', () => {
       elements.listRecent.appendChild(list)
     }
   }
+}
+
+elements.recentActBtnMobile.addEventListener('click', () => {
+  transactions(elements.recentActBtnMobile, elements.homePageMobile)
 })
