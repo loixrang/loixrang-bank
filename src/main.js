@@ -2,6 +2,7 @@ let amount = JSON.parse(localStorage.getItem("balance"));
 let newBalance;
 let loginStatus = JSON.parse(localStorage.getItem('loggedIn'));
 let userName = localStorage.getItem("name")
+let transHistory = []
 const $ = id => document.getElementById(id);
 const elements = {
   transferAmount: $("tr-amount"),
@@ -99,7 +100,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-const transHistory = []
 
 elements.viewBalance.addEventListener('click', () => {
   console.log('Reddit');
@@ -193,6 +193,7 @@ function deposit() {
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
     elements.msg.style.color = 'black'
     transHistory.push(`You deposited N${Number(addValue)}`)
+    localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
     elements.addAmount.value = '';
@@ -224,6 +225,7 @@ function transfer() {
     elements.msg.textContent = `Your transfer has been succesfull`
     elements.msg.style.color = 'green'
     transHistory.push(`You transfered N${Number(trAmount)}`)
+    localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
     elements.transferAmount.value = ''
@@ -293,14 +295,7 @@ elements.withBtn.addEventListener('click', () => {
   amount = JSON.parse(localStorage.getItem("balance"));
   console.log(amount)
 
-  if (value >= 100 && value <= amount && pin >= 1000) {
-    elements.msg.textContent = `Withdrawal of N${value} is succesful`;
-    newBalance = amount - value
-    transHistory.push(`You withdrawed N${Number(value)}`)
-    elements.msg.style.color = 'green'
-    elements.withAmt.value = ''
-    elements.withPin.value = ''
-  } else if (value == '' || value < 100) {
+  if (value == '' || value < 100) {
     elements.msg.textContent = 'Ensure to enter an amount'
     elements.msg.style.color = 'red'
     return
@@ -314,10 +309,18 @@ elements.withBtn.addEventListener('click', () => {
     elements.withAmt.value = ''
     elements.withPin.value = ''
     return
-  }
-  elements.balance.textContent = newBalance;
-  localStorage.setItem("balance", JSON.stringify(newBalance))
-  console.log(transHistory)
+  } else if (value >= 100 && value <= amount && pin >= 1000) {
+    elements.msg.textContent = `Withdrawal of N${value} is succesful`;
+    newBalance = amount - value
+    transHistory.push(`You withdrawed N${Number(value)}`)
+    elements.msg.style.color = 'green'
+    elements.withAmt.value = ''
+    elements.withPin.value = ''
+    elements.balance.textContent = newBalance;
+    localStorage.setItem("history", JSON.stringify(transHistory))
+    localStorage.setItem("balance", JSON.stringify(newBalance))
+    console.log(transHistory)
+  } 
 })
 
 elements.homePage.addEventListener('click', () => {
@@ -346,6 +349,7 @@ elements.recentActBtn.addEventListener('click', () => {
 })
 
 function transactions(btn, page) {
+  transHistory = JSON.parse(localStorage.getItem("history")) || []
   test()
   elements.placeHolder.classList.add("hidden")
   btn.classList.add("active-link")
