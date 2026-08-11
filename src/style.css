@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .heading {
-  @apply fixed left-1/2 -translate-x-1/2 backdrop-blur-xl bg-white/50 flex justify-between items-center w-[95dvw]  my-2 drop-shadow-sm p-5 rounded-3xl z-10
+  @apply fixed left-1/2 -translate-x-1/2 backdrop-blur-xl bg-white/40 flex justify-between items-center w-[95dvw]  my-2 drop-shadow-sm p-5 rounded-3xl z-10
 }
 .banner {
   @apply bg-[#24235F] flex w-[93dvw] mx-auto rounded-2xl text-white p-7

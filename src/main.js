@@ -27,8 +27,23 @@ const elements = {
   recentActBtn: $("transHistory"),
   listRecent: $("list"),
   recentHistory: $("history"),
-  homePage: $("homePage")
+  homePage: $("homePage"),
+  hamburgerMenuBtn: $("hamMenu"),
+  hamburgerMenu: $("mobile-menu")
 }
+
+elements.hamburgerMenuBtn.addEventListener('click', () => {
+  test()
+  elements.hamburgerMenu.classList.toggle('hidden')
+})
+elements.hamburgerMenu.addEventListener('click', () => {
+  elements.hamburgerMenu.classList.add('hidden')
+})
+document.addEventListener("click", (e) => {
+  if (!elements.hamburgerMenu.contains(e.target) && !elements.hamburgerMenuBtn.contains(e.target)) {
+    elements.hamburgerMenu.classList.add("hidden");
+  }
+});
 
 const transHistory = []
 
@@ -51,10 +66,10 @@ function activityBtn(element1, element2, element3, element1a, element2a, element
   elements.msg.classList.remove("hidden")
   elements.msg.textContent = ''
   elements.placeHolder.classList.add("hidden")
-  element1.classList.toggle("hidden")
+  element1.classList.remove("hidden")
   element2.classList.add("hidden")
   element3.classList.add("hidden")
-  element1a.classList.toggle(class1)
+  element1a.classList.add(class1)
   element2a.classList.remove(class2)
   element3a.classList.remove(class3)
   elements.recentHistory.classList.add("hidden")
