@@ -2,7 +2,7 @@ let amount = JSON.parse(localStorage.getItem("balance"));
 let newBalance;
 let loginStatus = JSON.parse(localStorage.getItem('loggedIn'));
 let userName = localStorage.getItem("name")
-let transHistory = []
+let transHistory = JSON.parse(localStorage.getItem("history")) || []
 const $ = id => document.getElementById(id);
 const elements = {
   transferAmount: $("tr-amount"),
@@ -219,29 +219,29 @@ function deposit() {
   }
 }
 
-function transfer() {
+function transfer(clientName) {
   const trAmount = elements.transferAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
 
   if (amount == 0) {
     elements.transferAmount.disabled = 'true'
-    return elements.trMsg.textContent = `You have no money, fam`
+    return elements.msg.textContent = `You have no money, fam`
   }
 
   if (trAmount < 100) {
-    elements.msg.textContent = `Unsuccessfull! - Number below N100`
-    elements.msg.style.color = 'red'
+    elements.msg.textContent = `Unsuccessfull! - amount below N100`
+    errorMessage()
     elements.transferAmount.value = ''
     return
   } else if (trAmount > amount) {
     elements.msg.textContent = `Unsuccessfull! - Number above balance`
-    elements.msg.style.color = 'red'
+    errorMessage()
     elements.transferAmount.value = ''
     return
   } else if (trAmount <= amount && trAmount >= 100) {
     newBalance = amount - trAmount
     elements.balance.textContent = `N${newBalance}`;
-    elements.msg.textContent = `Your transfer has been succesfull`
+    elements.msg.textContent = `Your transfer of N${trAmount} to ${clientName} has been succesfull`
     elements.msg.style.color = 'green'
     transHistory.push(`You transfered N${Number(trAmount)}`)
     localStorage.setItem("history", JSON.stringify(transHistory))
@@ -319,7 +319,7 @@ function checkButton() {
         elements.nextBtn.addEventListener('click', () => {
           elements.trScreen.classList.remove("hidden")
           elements.btn.addEventListener('click', () => {
-            transfer()
+            transfer(details.fullname)
           })
         })
         return
