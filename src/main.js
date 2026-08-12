@@ -50,6 +50,11 @@ if (loginStatus) {
   elements.mainPage.classList.remove("hidden");
   elements.balance.textContent = amount;
   elements.userNameValue.textContent = userName
+  elements.bankName.value = ''
+  elements.actNum.value = ''
+  elements.withPin.value = ''
+  elements.withAmt.value = ''
+  elements.addAmount.value = ''
 } else {
   elements.loginPage.classList.remove("hidden");
   elements.mainPage.classList.add("hidden")
@@ -138,22 +143,22 @@ function activityBtn(element1, element2, element3, element1a, element2a, element
 const Persons = {
   Samuel: {
     fullname: 'Samuel Anietie Akpabio',
-    accountNumber: '0167392038',
+    accountNumber: '1234',
     bank: 'FCMB'
   },
   Francis: {
     fullname: 'Francis Ini Ibiok',
-    accountNumber: '0167382038',
+    accountNumber: '2345',
     bank: 'WEMA'
   },
   Edidiong: {
     fullname: 'Edidiong Nseobong Reuben',
-    accountNumber: '0167372038',
+    accountNumber: '5678',
     bank: 'Fidelity'
   },
   Ekemini: {
     fullname: 'Ekemini Sunday Umo',
-    accountNumber: '0167362038',
+    accountNumber: '6789',
     bank: 'Access'
   }
 }
@@ -171,23 +176,33 @@ function clr() {
   elements.transOp.classList.remove("active-trans")
 }
 
+function errorMessage(activeElement, oldElement, activeColor, oldColor) {
+  //for deposit - general
+  elements.msg.style.color = 'red'
+  if (activeElement && oldElement) {
+    activeElement.style.border = `2px solid ${activeColor}`
+    activeElement.style.outline = 'none'
+    oldElement.style.border = `2px solid ${oldColor}`
+  } else if (activeElement && !oldElement) {
+    //for withdrawal
+    activeElement.style.border = '2px solid red'
+    activeElement.style.outline = 'none'
+  } else {
+    test()
+  }
+}
+
 function deposit() {
   const addValue = elements.addAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
 
-  const errorMessage = () => {
-    elements.msg.style.color = 'red'
-    elements.addAmount.style.border = '2px solid red'
-    elements.addAmount.style.outline = 'none'
-  }
-
   if (addValue > 3000) {
     elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
-    errorMessage()
+    errorMessage(elements.addAmount)
     return
   } else if (addValue < 100) {
     elements.msg.textContent = `Unsuccessful, your amount is below N100`
-    errorMessage()
+    errorMessage(elements.addAmount)
     return
   } else if (addValue <= 3000 && addValue >= 100) {
     newBalance = amount + Number(addValue)
@@ -214,12 +229,14 @@ function transfer() {
   }
 
   if (trAmount < 100) {
-    elements.msg.textContent = `Your transfer is unsuccessfull!! - number below N100`
+    elements.msg.textContent = `Unsuccessfull! - Number below N100`
     elements.msg.style.color = 'red'
+    elements.transferAmount.value = ''
     return
   } else if (trAmount > amount) {
-    elements.msg.textContent = `Your transfer is unsuccessfull!! - number above balance`
+    elements.msg.textContent = `Unsuccessfull! - Number above balance`
     elements.msg.style.color = 'red'
+    elements.transferAmount.value = ''
     return
   } else if (trAmount <= amount && trAmount >= 100) {
     newBalance = amount - trAmount
@@ -231,6 +248,10 @@ function transfer() {
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
     elements.transferAmount.value = ''
+    elements.actNum.value = ''
+    elements.bankName.value = ''
+    elements.nextBtn.classList.add('hidden')
+    elements.trScreen.classList.add("hidden")
   }
 }
 
@@ -240,24 +261,28 @@ function withdraw() {
   amount = JSON.parse(localStorage.getItem("balance"));
 
   if (value == '' || value < 100) {
-    elements.msg.textContent = 'Enter an amount above 100'
-    elements.msg.style.color = 'red'
+    elements.msg.textContent = 'Enter a number above 100'
+    errorMessage(elements.withAmt, elements.withPin, "red", "blue")
     return
   } else if (pin < 1000 || pin == '') {
+    elements.withAmt.disabled = true
     elements.msg.textContent = 'Enter a 4 digit pin'
-    elements.msg.style.color = 'red'
+    errorMessage(elements.withPin, elements.withAmt, "red", "blue")
     return
   } else if (value > amount) {
+    elements.withAmt.disabled = false
     elements.msg.textContent = `Insufficient funds`
-    elements.msg.style.color = 'red'
     elements.withAmt.value = ''
     elements.withPin.value = ''
+    elements.withPin.style.border = '2px solid blue'
+    errorMessage()
     return
   } else if (value >= 100 && value <= amount && pin >= 1000) {
     elements.msg.textContent = `Withdrawal of N${value} is succesful`;
     newBalance = amount - value
     transHistory.push(`You withdrawed N${Number(value)}`)
     elements.msg.style.color = 'blue'
+    elements.withPin.style.border = '2px solid blue'
     elements.withAmt.value = ''
     elements.withPin.value = ''
     elements.balance.textContent = newBalance;
@@ -272,14 +297,12 @@ function checkButton() {
 
   if (actNumber == '') {
     elements.msg.textContent = 'Please enter an account number'
-    elements.actNum.style.outline = '1px solid black'
-    elements.actNum.style.border = '1px solid black'
-  } else if (selBank == 'null') {
+    errorMessage(elements.actNum, elements.bankName, "red", "#5B35D5")
+    return
+  } else if (selBank == '') {
     elements.msg.textContent = 'Please select a bank'
-    elements.bankName.style.outline = '1px solid black'
-    elements.bankName.style.border = '1px solid black'
-    elements.actNum.style.outline = '#5B35D5'
-    elements.actNum.style.border = '#5B35D5'
+    errorMessage(elements.bankName, elements.actNum, "red", "#5B35D5")
+    return
   } else {
     elements.actNum.style.outline = 'none'
     elements.bankName.style.outline = 'none'
@@ -287,8 +310,11 @@ function checkButton() {
 
     for (const [person, details] of Object.entries(Persons)) {
       if (actNumber == details.accountNumber && selBank == details.bank) {
+        // console.log(person, details)
         elements.msg.textContent = details.fullname
+        elements.bankName.style.border = '2px solid #5B35D5'
         elements.msg.style.color = '#5B35D5'
+        elements.msg.style.padding = '0 2px'
         elements.nextBtn.classList.remove('hidden')
         elements.nextBtn.addEventListener('click', () => {
           elements.trScreen.classList.remove("hidden")
@@ -298,8 +324,10 @@ function checkButton() {
         })
         return
       } else {
-        elements.msg.textContent = `The account doesn't exist`
-        return
+        console.log(details.bank, details.accountNumber, selBank, actNumber)
+        elements.msg.textContent = `This account doesn't exist`
+        errorMessage()
+        elements.bankName.style.border = '2px solid #5B35D5'
       }        
     }
   }
