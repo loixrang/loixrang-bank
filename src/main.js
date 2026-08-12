@@ -58,31 +58,31 @@ if (loginStatus) {
 } else {
   elements.loginPage.classList.remove("hidden");
   elements.mainPage.classList.add("hidden")
+  elements.loginUsername.value = ''
+  elements.loginBalance.value = ''
 }
 
 
 elements.loginPageBtn.addEventListener('click', () => {
-  const initUserName = elements.loginUsername.value;
+  const initUserName = elements.loginUsername.value.trim();
   const initUserBalance = Number(elements.loginBalance.value);
-  if (initUserBalance == '' && initUserName == '') {
-    elements.loginUsername.style.outline = '2px solid red'
-    elements.loginBalance.style.outline = '2px solid red'
+  if ((initUserBalance == '' || initUserBalance == 0) && initUserName == '') {
+    errorMessage(elements.loginUsername, elements.loginBalance, "red", "red")
+    elements.loginUsername.focus()
     return
-  }
-  if (/\d/.test(initUserName)) {
-    elements.loginUsername.style.outline = '2px solid red'
-    elements.loginBalance.style.outline = 'none'
-    return
-  } else if (isNaN(initUserBalance)) {
-    elements.loginBalance.style.outline = '2px solid red'
-    elements.loginUsername.style.outline = 'none'
-    return
+  } else if (/\d/.test(initUserName) || initUserName == '') {
+    errorMessage(elements.loginUsername, elements.loginBalance, "red", "blue")
+    elements.loginUsername.focus()
+  } else if (isNaN(initUserBalance) || initUserBalance == '') {
+    errorMessage(elements.loginBalance, elements.loginUsername, "red", "blue")
+    elements.loginBalance.focus()
   } else {
     let loggedIn = true;
     elements.userNameValue.textContent = initUserName;
     elements.balance.textContent = initUserBalance;
     elements.loginPage.classList.add("hidden");
     elements.mainPage.classList.remove("hidden")
+    errorMessage(elements.loginBalance, elements.loginUsername, "blue", "blue")
     localStorage.setItem("name", initUserName)
     localStorage.setItem("balance", JSON.stringify(initUserBalance));
     localStorage.setItem("loggedIn", JSON.stringify(loggedIn))
@@ -183,9 +183,11 @@ function errorMessage(activeElement, oldElement, activeColor, oldColor) {
     activeElement.style.border = `2px solid ${activeColor}`
     activeElement.style.outline = 'none'
     oldElement.style.border = `2px solid ${oldColor}`
+    oldElement.style.outline = `none`
+    return
   } else if (activeElement && !oldElement) {
     //for withdrawal
-    activeElement.style.border = '2px solid red'
+    activeElement.style.border = `2px solid ${activeColor}`
     activeElement.style.outline = 'none'
   } else {
     test()
