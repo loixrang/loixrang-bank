@@ -175,19 +175,27 @@ function deposit() {
   const addValue = elements.addAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
 
+  const errorMessage = () => {
+    elements.msg.style.color = 'red'
+    elements.addAmount.style.border = '2px solid red'
+    elements.addAmount.style.outline = 'none'
+  }
+
   if (addValue > 3000) {
     elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
-    elements.msg.style.color = 'red'
+    errorMessage()
     return
   } else if (addValue < 100) {
     elements.msg.textContent = `Unsuccessful, your amount is below N100`
-    elements.msg.style.color = 'red'
+    errorMessage()
     return
   } else if (addValue <= 3000 && addValue >= 100) {
     newBalance = amount + Number(addValue)
     elements.balance.textContent = `N${newBalance}`
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
-    elements.msg.style.color = 'black'
+    elements.msg.style.color = 'green'
+    elements.addAmount.style.border = '2px solid green'
+    elements.addAmount.style.outline = 'none'
     transHistory.push(`You deposited N${Number(addValue)}`)
     localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
@@ -223,6 +231,38 @@ function transfer() {
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
     elements.transferAmount.value = ''
+  }
+}
+
+function withdraw() {
+  let value = Number(elements.withAmt.value);
+  let pin = Number(elements.withPin.value);
+  amount = JSON.parse(localStorage.getItem("balance"));
+
+  if (value == '' || value < 100) {
+    elements.msg.textContent = 'Enter an amount above 100'
+    elements.msg.style.color = 'red'
+    return
+  } else if (pin < 1000 || pin == '') {
+    elements.msg.textContent = 'Enter a 4 digit pin'
+    elements.msg.style.color = 'red'
+    return
+  } else if (value > amount) {
+    elements.msg.textContent = `Insufficient funds`
+    elements.msg.style.color = 'red'
+    elements.withAmt.value = ''
+    elements.withPin.value = ''
+    return
+  } else if (value >= 100 && value <= amount && pin >= 1000) {
+    elements.msg.textContent = `Withdrawal of N${value} is succesful`;
+    newBalance = amount - value
+    transHistory.push(`You withdrawed N${Number(value)}`)
+    elements.msg.style.color = 'blue'
+    elements.withAmt.value = ''
+    elements.withPin.value = ''
+    elements.balance.textContent = newBalance;
+    localStorage.setItem("history", JSON.stringify(transHistory))
+    localStorage.setItem("balance", JSON.stringify(newBalance))
   }
 }
 
@@ -274,35 +314,7 @@ elements.addBtn.addEventListener('click', () => {
 })
 
 elements.withBtn.addEventListener('click', () => {
-  let value = Number(elements.withAmt.value);
-  let pin = Number(elements.withPin.value);
-  amount = JSON.parse(localStorage.getItem("balance"));
-
-  if (value == '' || value < 100) {
-    elements.msg.textContent = 'Ensure to enter an amount'
-    elements.msg.style.color = 'red'
-    return
-  } else if (pin < 1000 || pin == '') {
-    elements.msg.textContent = 'Enter a 4 digit pin'
-    elements.msg.style.color = 'red'
-    return
-  } else if (value > amount) {
-    elements.msg.textContent = `Insufficient funds`
-    elements.msg.style.color = 'red'
-    elements.withAmt.value = ''
-    elements.withPin.value = ''
-    return
-  } else if (value >= 100 && value <= amount && pin >= 1000) {
-    elements.msg.textContent = `Withdrawal of N${value} is succesful`;
-    newBalance = amount - value
-    transHistory.push(`You withdrawed N${Number(value)}`)
-    elements.msg.style.color = 'green'
-    elements.withAmt.value = ''
-    elements.withPin.value = ''
-    elements.balance.textContent = newBalance;
-    localStorage.setItem("history", JSON.stringify(transHistory))
-    localStorage.setItem("balance", JSON.stringify(newBalance))
-  } 
+  withdraw() 
 })
 
 elements.homePage.addEventListener('click', () => {
@@ -342,7 +354,6 @@ function transactions(btn, page) {
     elements.msg.classList.remove("hidden")
     elements.msg.textContent = `You have no recent activity`
     elements.msg.style.textAlign = 'Center'
-    elements.msg.style.padding = '2em'
   } else {
     for (let i = transHistory.length - 1; i >= 0; i--) {
       elements.msg.classList.add("hidden")
@@ -361,6 +372,17 @@ elements.logOut.forEach(logout => {
   logout.addEventListener('click', () => {
     localStorage.clear()
     elements.loginPage.classList.remove("hidden");
-    elements.mainPage.classList.add("hidden")
+    elements.mainPage.classList.add("hidden");
+    elements.homePage.classList.add("active-link")
+    elements.homePageMobile.classList.add("active-link")
+    elements.recentActBtn.classList.remove("active-link")
+    elements.recentActBtnMobile.classList.remove("active-link")
+    elements.placeHolder.classList.remove("hidden")
+    elements.recentHistory.classList.add("hidden")
+    elements.loginUsername.value = ''
+    elements.loginBalance.value = ''
+    clr()
+    elements.msg.textContent = ''
+    elements.msg.classList.add("hidden")
   })
 })

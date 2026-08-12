@@ -62,3 +62,6 @@ li:hover {
 #list li:hover {
   @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md
 }
+/* button:hover {
+  transition: 300ms ease-in-out all;
+} */
