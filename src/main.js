@@ -47,6 +47,8 @@ const elements = {
 if (loginStatus) {
   elements.loginPage.classList.add("hidden");
   elements.mainPage.classList.remove("hidden");
+  elements.hamburgerMenuBtn.classList.add('active-link')
+  elements.hamMenuText.textContent = 'Home'
   elements.balance.textContent = amount;
   elements.userNameValue.textContent = userName
   elements.bankName.value = ''
@@ -90,13 +92,17 @@ elements.loginPageBtn.addEventListener('click', () => {
 
 elements.hamburgerMenuBtn.addEventListener('click', () => {
   elements.hamburgerMenu.classList.toggle('hidden')
+  elements.hamburgerMenuBtn.classList.add('bg-transparent')
+  elements.hamburgerMenuBtn.classList.add('text-[#5B35D5]')
 })
 elements.hamburgerMenu.addEventListener('click', () => {
   elements.hamburgerMenu.classList.add('hidden')
+  elements.hamburgerMenuBtn.classList.remove('bg-transparent')
 })
 document.addEventListener("click", (e) => {
   if (!elements.hamburgerMenu.contains(e.target) && !elements.hamburgerMenuBtn.contains(e.target)) {
     elements.hamburgerMenu.classList.add("hidden");
+    elements.hamburgerMenuBtn.classList.remove('bg-transparent')
   }
 });
 
@@ -114,23 +120,23 @@ elements.viewBalance.addEventListener('click', () => {
 
 elements.transOp.forEach(transOpt => {
   transOpt.addEventListener('click', () => {
-    activityBtn(elements.trans, elements.transOp, "active-trans")
+    activityBtn(elements.trans, elements.transOp, "active-trans", 'Transfer')
   })
 })
 
 elements.withOp.forEach(withOpt => {
   withOpt.addEventListener('click', () => {
-    activityBtn(elements.with, elements.withOp, "active-with")
+    activityBtn(elements.with, elements.withOp, "active-with", 'Withdraw')
   })
 })
 
 elements.depOp.forEach(depOpt => {
   depOpt.addEventListener('click', () => {
-    activityBtn(elements.dep, elements.depOp, "active-dep")
+    activityBtn(elements.dep, elements.depOp, "active-dep", 'Deposit')
   })
 })
 
-function activityBtn(page, option, class1) {
+function activityBtn(page, option, class1, text) {
   elements.msg.classList.remove("hidden")
   elements.msg.textContent = ''
   elements.placeHolder.classList.add("hidden")
@@ -142,6 +148,8 @@ function activityBtn(page, option, class1) {
   elements.homePage.forEach(el => el.classList.remove("active-link"))
   elements.msg.style.textAlign = 'left'
   elements.msg.style.padding = '0'
+  elements.hamburgerMenuBtn.classList.add(class1)
+  elements.hamMenuText.textContent = text
 }
 
 const Persons = {
@@ -178,6 +186,10 @@ function clr() {
   elements.depOp.forEach(el => el.classList.remove("active-dep"))
   elements.withOp.forEach(el => el.classList.remove("active-with"))
   elements.transOp.forEach(el => el.classList.remove("active-trans"))
+  elements.hamburgerMenuBtn.classList.remove('active-dep')
+  elements.hamburgerMenuBtn.classList.remove('active-with')
+  elements.hamburgerMenuBtn.classList.remove('active-trans')
+  elements.hamburgerMenuBtn.classList.remove('active-link')
 }
 
 function errorMessage(activeElement, oldElement, activeColor, oldColor) {
@@ -249,7 +261,7 @@ function transfer(clientName) {
     elements.balance.textContent = `N${newBalance}`;
     elements.msg.textContent = `Your transfer of N${trAmount} to ${clientName} has been succesfull`
     elements.msg.style.color = 'green'
-    transHistory.push(`You transfered N${Number(trAmount)}`)
+    transHistory.push(`You transfered N${Number(trAmount)} to ${clientName}`)
     localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
@@ -361,6 +373,8 @@ elements.homePage.forEach(homePage => {
     clr()
     elements.msg.textContent = ''
     elements.msg.classList.add("hidden")
+    elements.hamburgerMenuBtn.classList.add('active-link')
+    elements.hamMenuText.textContent = 'Home'
   })
 })
 
@@ -370,6 +384,8 @@ elements.recentActBtn.forEach(recent => {
     transactions()
     recent.classList.add('active-link')
     elements.homePage.forEach(el => el.classList.remove("active-link"))
+    elements.hamburgerMenuBtn.classList.add('active-link')
+    elements.hamMenuText.textContent = 'History'
   })
 })
 
@@ -407,5 +423,7 @@ elements.logOut.forEach(logout => {
     clr()
     elements.msg.textContent = ''
     elements.msg.classList.add("hidden")
+    elements.hamburgerMenuBtn.classList.add('active-link')
+    elements.hamMenuText.textContent = 'Home'
   })
 })
