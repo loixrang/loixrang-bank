@@ -15,9 +15,9 @@ const elements = {
   trScreen: $("tr-screen"),
   addAmount: $("tr-amount-add"),
   addBtn: $("add-btn"),
-  transOp: $("transfer-op"),
-  withOp: $("withdraw-op"),
-  depOp: $("deposit-op"),
+  transOp: document.querySelectorAll(".transfer-op"),
+  withOp: document.querySelectorAll(".withdraw-op"),
+  depOp: document.querySelectorAll(".deposit-op"),
   trans: $("transfer"),
   with: $("withdraw"),
   dep: $("deposit"),
@@ -26,14 +26,13 @@ const elements = {
   withAmt: $('wd-amount'),
   withBtn: $('wd-btn'),
   withPin: $('wd-pin'),
-  recentActBtn: $("transHistory"),
-  recentActBtnMobile: $("transHistory-mobile"),
+  recentActBtn: document.querySelectorAll(".transHistory"),
   listRecent: $("list"),
   recentHistory: $("history"),
-  homePage: $("homePage"),
-  homePageMobile: $("homePage-mobile"),
+  homePage: document.querySelectorAll(".homePage"),
   hamburgerMenuBtn: $("hamMenu"),
   hamburgerMenu: $("mobile-menu"),
+  hamMenuText: $("chosen-activity"),
   loginPageBtn: $("login-btn"),
   loginPage: $("loginPage"),
   mainPage: $("main"),
@@ -48,6 +47,8 @@ const elements = {
 if (loginStatus) {
   elements.loginPage.classList.add("hidden");
   elements.mainPage.classList.remove("hidden");
+  elements.hamburgerMenuBtn.classList.add('active-link')
+  elements.hamMenuText.textContent = 'Home'
   elements.balance.textContent = amount;
   elements.userNameValue.textContent = userName
   elements.bankName.value = ''
@@ -91,13 +92,17 @@ elements.loginPageBtn.addEventListener('click', () => {
 
 elements.hamburgerMenuBtn.addEventListener('click', () => {
   elements.hamburgerMenu.classList.toggle('hidden')
+  elements.hamburgerMenuBtn.classList.add('bg-transparent')
+  elements.hamburgerMenuBtn.classList.add('text-[#5B35D5]')
 })
 elements.hamburgerMenu.addEventListener('click', () => {
   elements.hamburgerMenu.classList.add('hidden')
+  elements.hamburgerMenuBtn.classList.remove('bg-transparent')
 })
 document.addEventListener("click", (e) => {
   if (!elements.hamburgerMenu.contains(e.target) && !elements.hamburgerMenuBtn.contains(e.target)) {
     elements.hamburgerMenu.classList.add("hidden");
+    elements.hamburgerMenuBtn.classList.remove('bg-transparent')
   }
 });
 
@@ -106,38 +111,45 @@ elements.viewBalance.addEventListener('click', () => {
   // elements.balance.textContent = 'XXXXXXX'
   if (elements.balance.textContent == 'xxxxxx') {
     elements.balance.textContent = JSON.parse(localStorage.getItem("balance"));
+    elements.viewBalance.textContent = 'Hide Balance'
   } else {
     elements.balance.textContent = 'xxxxxx'
+    elements.viewBalance.textContent = 'View Balance'
   }
 })
 
-elements.transOp.addEventListener('click', () => {
-  activityBtn(elements.trans, elements.dep, elements.with, elements.transOp, elements.depOp, elements.withOp, "active-trans", "active-dep", "active-with")
-})
-elements.withOp.addEventListener('click', () => {
-  activityBtn(elements.with, elements.dep, elements.trans, elements.withOp, elements.depOp, elements.transOp, "active-with", "active-dep", "active-trans")
-})
-elements.depOp.addEventListener('click', () => {
-  activityBtn(elements.dep, elements.with, elements.trans, elements.depOp, elements.withOp, elements.transOp, "active-dep", "active-with", "active-trans")
+elements.transOp.forEach(transOpt => {
+  transOpt.addEventListener('click', () => {
+    activityBtn(elements.trans, elements.transOp, "active-trans", 'Transfer')
+  })
 })
 
-function activityBtn(element1, element2, element3, element1a, element2a, element3a, class1, class2, class3) {
+elements.withOp.forEach(withOpt => {
+  withOpt.addEventListener('click', () => {
+    activityBtn(elements.with, elements.withOp, "active-with", 'Withdraw')
+  })
+})
+
+elements.depOp.forEach(depOpt => {
+  depOpt.addEventListener('click', () => {
+    activityBtn(elements.dep, elements.depOp, "active-dep", 'Deposit')
+  })
+})
+
+function activityBtn(page, option, class1, text) {
   elements.msg.classList.remove("hidden")
   elements.msg.textContent = ''
   elements.placeHolder.classList.add("hidden")
-  element1.classList.remove("hidden")
-  element2.classList.add("hidden")
-  element3.classList.add("hidden")
-  element1a.classList.add(class1)
-  element2a.classList.remove(class2)
-  element3a.classList.remove(class3)
+  clr()
+  page.classList.remove("hidden")
+  option.forEach(el => el.classList.add(class1))
   elements.recentHistory.classList.add("hidden")
-  elements.recentActBtn.classList.remove("active-link")
-  elements.recentActBtnMobile.classList.remove("active-link")
-  elements.homePage.classList.remove("active-link")
-  elements.homePageMobile.classList.remove("active-link")
+  elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
+  elements.homePage.forEach(el => el.classList.remove("active-link"))
   elements.msg.style.textAlign = 'left'
   elements.msg.style.padding = '0'
+  elements.hamburgerMenuBtn.classList.add(class1)
+  elements.hamMenuText.textContent = text
 }
 
 const Persons = {
@@ -169,11 +181,15 @@ function test() {
 
 function clr() {
   elements.dep.classList.add("hidden")
-  elements.trans.classList.add("hidden")
   elements.with.classList.add("hidden")
-  elements.depOp.classList.remove("active-dep")
-  elements.withOp.classList.remove("active-with")
-  elements.transOp.classList.remove("active-trans")
+  elements.trans.classList.add("hidden")
+  elements.depOp.forEach(el => el.classList.remove("active-dep"))
+  elements.withOp.forEach(el => el.classList.remove("active-with"))
+  elements.transOp.forEach(el => el.classList.remove("active-trans"))
+  elements.hamburgerMenuBtn.classList.remove('active-dep')
+  elements.hamburgerMenuBtn.classList.remove('active-with')
+  elements.hamburgerMenuBtn.classList.remove('active-trans')
+  elements.hamburgerMenuBtn.classList.remove('active-link')
 }
 
 function errorMessage(activeElement, oldElement, activeColor, oldColor) {
@@ -245,7 +261,7 @@ function transfer(clientName) {
     elements.balance.textContent = `N${newBalance}`;
     elements.msg.textContent = `Your transfer of N${trAmount} to ${clientName} has been succesfull`
     elements.msg.style.color = 'green'
-    transHistory.push(`You transfered N${Number(trAmount)}`)
+    transHistory.push(`You transfered N${Number(trAmount)} to ${clientName}`)
     localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
@@ -330,7 +346,7 @@ function checkButton() {
         elements.msg.textContent = `This account doesn't exist`
         errorMessage()
         elements.bankName.style.border = '2px solid #5B35D5'
-      }        
+      }
     }
   }
 }
@@ -344,39 +360,38 @@ elements.addBtn.addEventListener('click', () => {
 })
 
 elements.withBtn.addEventListener('click', () => {
-  withdraw() 
+  withdraw()
 })
 
-elements.homePage.addEventListener('click', () => {
-  elements.homePage.classList.add("active-link")
-  elements.recentActBtn.classList.remove("active-link")
-  elements.placeHolder.classList.remove("hidden")
-  elements.recentHistory.classList.add("hidden")
-  clr()
-  elements.msg.textContent = ''
-  elements.msg.classList.add("hidden")
-})
 
-elements.homePageMobile.addEventListener('click', () => {
-  elements.homePageMobile.classList.add("active-link")
-  elements.recentActBtnMobile.classList.remove("active-link")
-  elements.placeHolder.classList.remove("hidden")
-  elements.recentHistory.classList.add("hidden")
-  clr()
-  elements.msg.textContent = ''
-  elements.msg.classList.add("hidden")
+elements.homePage.forEach(homePage => {
+  homePage.addEventListener('click', () => {
+    elements.homePage.forEach(el => el.classList.add("active-link"))
+    elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
+    elements.placeHolder.classList.remove("hidden")
+    elements.recentHistory.classList.add("hidden")
+    clr()
+    elements.msg.textContent = ''
+    elements.msg.classList.add("hidden")
+    elements.hamburgerMenuBtn.classList.add('active-link')
+    elements.hamMenuText.textContent = 'Home'
+  })
 })
 
 //Transaction History
-elements.recentActBtn.addEventListener('click', () => {
-  transactions(elements.recentActBtn, elements.homePage)
+elements.recentActBtn.forEach(recent => {
+  recent.addEventListener('click', () => {
+    transactions()
+    recent.classList.add('active-link')
+    elements.homePage.forEach(el => el.classList.remove("active-link"))
+    elements.hamburgerMenuBtn.classList.add('active-link')
+    elements.hamMenuText.textContent = 'History'
+  })
 })
 
-function transactions(btn, page) {
+function transactions() {
   transHistory = JSON.parse(localStorage.getItem("history")) || []
   elements.placeHolder.classList.add("hidden")
-  btn.classList.add("active-link")
-  page.classList.remove("active-link")
   elements.recentHistory.classList.remove("hidden")
   clr()
   elements.listRecent.textContent = ''
@@ -394,25 +409,21 @@ function transactions(btn, page) {
   }
 }
 
-elements.recentActBtnMobile.addEventListener('click', () => {
-  transactions(elements.recentActBtnMobile, elements.homePageMobile)
-})
-
 elements.logOut.forEach(logout => {
   logout.addEventListener('click', () => {
     localStorage.clear()
     elements.loginPage.classList.remove("hidden");
     elements.mainPage.classList.add("hidden");
-    elements.homePage.classList.add("active-link")
-    elements.homePageMobile.classList.add("active-link")
-    elements.recentActBtn.classList.remove("active-link")
-    elements.recentActBtnMobile.classList.remove("active-link")
-    elements.placeHolder.classList.remove("hidden")
+    elements.homePage.forEach(el => el.classList.add("active-link"))
+    elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
     elements.recentHistory.classList.add("hidden")
+    elements.placeHolder.classList.remove("hidden")
     elements.loginUsername.value = ''
     elements.loginBalance.value = ''
     clr()
     elements.msg.textContent = ''
     elements.msg.classList.add("hidden")
+    elements.hamburgerMenuBtn.classList.add('active-link')
+    elements.hamMenuText.textContent = 'Home'
   })
 })

@@ -35,7 +35,7 @@
           <p>Log in to access your account</p>
           <label class="font-bold text-black" for="username">Username</label>
           <input
-            class="border-2 rounded-lg p-2 focus:border-0 border-[blue]"
+            class="border-2 text-[black] rounded-lg p-2 focus:border-0 border-[blue]"
             type="text"
             id="username"
             placeholder="Enter your username"
@@ -44,7 +44,7 @@
             >Balance</label
           >
           <input
-            class="border-2 p-2 rounded-lg focus:border-0 border-[blue]"
+            class="border-2 p-2 text-[black] rounded-lg focus:border-0 border-[blue]"
             type="text"
             id="balance-value"
             placeholder="Enter your balance (N)"
@@ -79,7 +79,7 @@
       </p>
     </article>
     <article id="main" class="hidden">
-      <div class="sm:h-40 h-25">
+      <div class="sm:h-30 h-25">
         <header class="heading grid grid-cols-1">
           <h1 class="font-bold text-2xl">
             <mark class="text-purple-700 bg-transparent">Loixrang</mark> Bank
@@ -89,8 +89,8 @@
           >
             <button
               id="hamMenu"
-              class="cursor-pointer flex items-center justify-center"
-            >
+              class="cursor-pointer flex gap-1 items-center justify-center"
+            ><span id="chosen-activity" class=""></span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -110,14 +110,20 @@
               id="mobile-menu"
               class="hidden flex flex-col gap-1 absolute bg-white w-40 p-3 right-0 rounded-xl top-15"
             >
-              <li id="homePage-mobile" class="active-link">Home</li>
-              <li class="my-1" id="transHistory-mobile">Transactions</li>
+              <li class="active-link homePage">Home</li>
+              <li class="withdraw-op">Withdraw</li>
+              <li class="transfer-op">Transfer</li>
+              <li class="deposit-op">Deposit</li>
+              <li class="my-1 transHistory">History</li>
               <li class="logout">Logout</li>
             </ul>
           </nav>
           <ul class="hidden sm:flex gap-5">
-            <li id="homePage" class="active-link">Home</li>
-            <li id="transHistory">Transactions</li>
+            <li class="active-link homePage">Home</li>
+            <li class="withdraw-op">Withdraw</li>
+            <li class="transfer-op">Transfer</li>
+            <li class="deposit-op">Deposit</li>
+            <li class="transHistory">History</li>
             <li class="logout">Logout</li>
           </ul>
         </header>
@@ -137,9 +143,9 @@
             </p>
             <button
               id="view-balance"
-              class="bg-[#5B35D5] px-5 py-2 rounded-md cursor-pointer"
+              class="bg-[#5B35D5] hover:opacity-90 active:opacity-80 px-3 py-2 rounded-md cursor-pointer"
             >
-              View balance
+              Hide balance
             </button>
           </div>
           <div class="w-1/4 flex items-center justify-center">
@@ -150,7 +156,7 @@
             />
           </div>
         </div>
-        <div class="interact text-[#17213D]">
+        <div class="hidden interact text-[#17213D]">
           <h1 class="text-center font-bold text-2xl">
             What would you like to do?
           </h1>
@@ -196,7 +202,7 @@
         </div>
         <div class="activity">
           <h1 id="holder-text" class="font-bold text-2xl text-center">
-            Please select an activity above
+            Select an activity from the menu
           </h1>
           <section id="deposit" class="hidden">
             <h1

@@ -13,7 +13,7 @@ body {
   @apply bg-[#24235F] flex w-[93dvw] mx-auto rounded-2xl text-white p-7
 }
 .active-link {
-  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md
+  @apply text-white bg-[#2E218E] px-1 rounded-md
 }
 .interact {
   @apply pt-10
@@ -23,7 +23,7 @@ li{
 }
 
 li:hover {
-  @apply text-purple-700 bg-[#d7dbee] px-3 pb-1 rounded-md cursor-pointer
+  @apply text-white bg-[#2E218E] px-3 rounded-md cursor-pointer
 }
 .cards {
   @apply bg-white rounded-xl drop-shadow-xl z-0 p-5
@@ -33,22 +33,22 @@ li:hover {
   @apply bg-white mt-10 mb-20 w-[85dvw] mx-auto rounded-2xl drop-shadow-2xl p-6
 }
 .active-trans {
-  @apply bg-[#5B35D5] text-white
+  @apply bg-[#5B35D5] text-white px-1 rounded-md
 }
 .active-with {
-  @apply bg-[#1250d6] text-white
+  @apply bg-[#1250d6] text-white px-1 rounded-md
 }
 .active-dep {
-  @apply bg-[#2f8f34] text-white
+  @apply bg-[#2f8f34] text-white px-1 rounded-md
 }
 
-#transfer-op:hover {
+.transfer-op:hover {
   @apply bg-[#5B35D5] text-white transition-all duration-300 ease-linear
 }
-#withdraw-op:hover {
+.withdraw-op:hover {
   @apply bg-[#1250d6] text-white transition-all duration-300 ease-linear
 }
-#deposit-op:hover {
+.deposit-op:hover {
   @apply bg-[#2f8f34] text-white transition-all duration-300 ease-linear
 }
 
