@@ -19,11 +19,11 @@ body {
   @apply pt-10
 }
 li{
-  @apply transition-all duration-300 ease-linear
+  @apply transition-all duration-300 ease-linear px-1 py-1
 }
 
 li:hover {
-  @apply text-white bg-[#2E218E] px-3 rounded-md cursor-pointer
+  @apply text-white bg-[#2E218E] rounded-md cursor-pointer
 }
 .cards {
   @apply bg-white rounded-xl drop-shadow-xl z-0 p-5
