@@ -32,6 +32,7 @@ const elements = {
   homePage: document.querySelectorAll(".homePage"),
   hamburgerMenuBtn: $("hamMenu"),
   hamburgerMenu: $("mobile-menu"),
+  hamMenuText: $("chosen-activity"),
   loginPageBtn: $("login-btn"),
   loginPage: $("loginPage"),
   mainPage: $("main"),
@@ -113,7 +114,7 @@ elements.viewBalance.addEventListener('click', () => {
 
 elements.transOp.forEach(transOpt => {
   transOpt.addEventListener('click', () => {
-    activityBtn(elements.trans, elements.transOp,"active-trans")
+    activityBtn(elements.trans, elements.transOp, "active-trans")
   })
 })
 
@@ -133,16 +134,8 @@ function activityBtn(page, option, class1) {
   elements.msg.classList.remove("hidden")
   elements.msg.textContent = ''
   elements.placeHolder.classList.add("hidden")
-  // Hide all pages
-  elements.dep.classList.add("hidden")
-  elements.with.classList.add("hidden")
-  elements.trans.classList.add("hidden")
-
-  // Show selected page
+  clr()
   page.classList.remove("hidden")
-  elements.depOp.forEach(el => el.classList.remove("active-dep"))
-  elements.withOp.forEach(el => el.classList.remove("active-with"))
-  elements.transOp.forEach(el => el.classList.remove("active-trans"))
   option.forEach(el => el.classList.add(class1))
   elements.recentHistory.classList.add("hidden")
   elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
@@ -180,18 +173,11 @@ function test() {
 
 function clr() {
   elements.dep.classList.add("hidden")
-  elements.trans.classList.add("hidden")
   elements.with.classList.add("hidden")
-  elements.depOp.classList.remove("active-dep")
-  elements.depOp.forEach(depOp => {
-    depOp.classList.remove('active-dep')
-  })
-  elements.withOp.forEach(withOp => {
-    withOp.classList.remove('active-with')
-  })
-  elements.transOp.forEach(transOp => {
-    transOp.classList.remove('active-trans')
-  })
+  elements.trans.classList.add("hidden")
+  elements.depOp.forEach(el => el.classList.remove("active-dep"))
+  elements.withOp.forEach(el => el.classList.remove("active-with"))
+  elements.transOp.forEach(el => el.classList.remove("active-trans"))
 }
 
 function errorMessage(activeElement, oldElement, activeColor, oldColor) {
@@ -365,40 +351,31 @@ elements.withBtn.addEventListener('click', () => {
   withdraw()
 })
 
-//to be modified
 
-// elements.homePage.addEventListener('click', () => {
-//   elements.homePage.classList.add("active-link")
-//   elements.recentActBtn.classList.remove("active-link")
-//   elements.placeHolder.classList.remove("hidden")
-//   elements.recentHistory.classList.add("hidden")
-//   clr()
-//   elements.msg.textContent = ''
-//   elements.msg.classList.add("hidden")
-// })
-
-//to be deleted:
-
-// elements.homePageMobile.addEventListener('click', () => {
-//   elements.homePageMobile.classList.add("active-link")
-//   elements.recentActBtnMobile.classList.remove("active-link")
-//   elements.placeHolder.classList.remove("hidden")
-//   elements.recentHistory.classList.add("hidden")
-//   clr()
-//   elements.msg.textContent = ''
-//   elements.msg.classList.add("hidden")
-// })
+elements.homePage.forEach(homePage => {
+  homePage.addEventListener('click', () => {
+    elements.homePage.forEach(el => el.classList.add("active-link"))
+    elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
+    elements.placeHolder.classList.remove("hidden")
+    elements.recentHistory.classList.add("hidden")
+    clr()
+    elements.msg.textContent = ''
+    elements.msg.classList.add("hidden")
+  })
+})
 
 //Transaction History
-// elements.recentActBtn.addEventListener('click', () => {
-//   transactions(elements.recentActBtn, elements.homePage)
-// })
+elements.recentActBtn.forEach(recent => {
+  recent.addEventListener('click', () => {
+    transactions()
+    recent.classList.add('active-link')
+    elements.homePage.forEach(el => el.classList.remove("active-link"))
+  })
+})
 
-function transactions(btn, page) {
+function transactions() {
   transHistory = JSON.parse(localStorage.getItem("history")) || []
   elements.placeHolder.classList.add("hidden")
-  btn.classList.add("active-link")
-  page.classList.remove("active-link")
   elements.recentHistory.classList.remove("hidden")
   clr()
   elements.listRecent.textContent = ''
@@ -416,21 +393,15 @@ function transactions(btn, page) {
   }
 }
 
-// elements.recentActBtnMobile.addEventListener('click', () => {
-//   transactions(elements.recentActBtnMobile, elements.homePageMobile)
-// })
-
 elements.logOut.forEach(logout => {
   logout.addEventListener('click', () => {
     localStorage.clear()
     elements.loginPage.classList.remove("hidden");
     elements.mainPage.classList.add("hidden");
-    elements.homePage.classList.add("active-link")
-    elements.homePageMobile.classList.add("active-link")
-    elements.recentActBtn.classList.remove("active-link")
-    elements.recentActBtnMobile.classList.remove("active-link")
-    elements.placeHolder.classList.remove("hidden")
+    elements.homePage.forEach(el => el.classList.add("active-link"))
+    elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
     elements.recentHistory.classList.add("hidden")
+    elements.placeHolder.classList.remove("hidden")
     elements.loginUsername.value = ''
     elements.loginBalance.value = ''
     clr()

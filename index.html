@@ -90,7 +90,7 @@
             <button
               id="hamMenu"
               class="cursor-pointer flex items-center justify-center"
-            >
+            ><span id="chosen-activity"></span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -143,7 +143,7 @@
             </p>
             <button
               id="view-balance"
-              class="bg-[#5B35D5] px-5 py-2 rounded-md cursor-pointer"
+              class="bg-[#5B35D5] hover:opacity-90 active:opacity-80 px-3 py-2 rounded-md cursor-pointer"
             >
               Hide balance
             </button>
@@ -202,7 +202,7 @@
         </div>
         <div class="activity">
           <h1 id="holder-text" class="font-bold text-2xl text-center">
-            Please select an activity above
+            Select an activity from the menu
           </h1>
           <section id="deposit" class="hidden">
             <h1
