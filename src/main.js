@@ -150,6 +150,7 @@ function activityBtn(page, option, class1, text) {
   elements.msg.style.padding = '0'
   elements.hamburgerMenuBtn.classList.add(class1)
   elements.hamMenuText.textContent = text
+  document.title = `Loixrang Bank - ${text}`
 }
 
 const Persons = {
@@ -375,6 +376,7 @@ elements.homePage.forEach(homePage => {
     elements.msg.classList.add("hidden")
     elements.hamburgerMenuBtn.classList.add('active-link')
     elements.hamMenuText.textContent = 'Home'
+    document.title = 'Loixrang Bank'
   })
 })
 
@@ -386,6 +388,7 @@ elements.recentActBtn.forEach(recent => {
     elements.homePage.forEach(el => el.classList.remove("active-link"))
     elements.hamburgerMenuBtn.classList.add('active-link')
     elements.hamMenuText.textContent = 'History'
+    document.title = 'Loixrang Bank - History'
   })
 })
 
@@ -425,5 +428,6 @@ elements.logOut.forEach(logout => {
     elements.msg.classList.add("hidden")
     elements.hamburgerMenuBtn.classList.add('active-link')
     elements.hamMenuText.textContent = 'Home'
+    document.title = 'Loixrang Bank - Log in'
   })
 })
