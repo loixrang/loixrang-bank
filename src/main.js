@@ -155,22 +155,22 @@ function activityBtn(page, option, class1, text) {
 
 const Persons = {
   Samuel: {
-    fullname: 'Samuel Anietie Akpabio',
+    fullname: 'Peter Parker',
     accountNumber: '1234',
     bank: 'FCMB'
   },
   Francis: {
-    fullname: 'Francis Ini Ibiok',
+    fullname: 'Bruce Wayne',
     accountNumber: '2345',
     bank: 'WEMA'
   },
   Edidiong: {
-    fullname: 'Edidiong Nseobong Reuben',
+    fullname: 'Clark Kent',
     accountNumber: '5678',
     bank: 'Fidelity'
   },
   Ekemini: {
-    fullname: 'Ekemini Sunday Umo',
+    fullname: 'Lois Lane',
     accountNumber: '6789',
     bank: 'Access'
   }
