@@ -4,67 +4,76 @@ let loginStatus = JSON.parse(localStorage.getItem('loggedIn'));
 let userName = localStorage.getItem("name")
 let transHistory = JSON.parse(localStorage.getItem("history")) || []
 const $ = id => document.getElementById(id);
-const elements = {
+const q = el => document.querySelectorAll(el);
+const buttons = {
+  transfer: $("tr-btn"),
+  deposit: $("add-btn"),
+  withdraw: $('wd-btn'),
+  logIn: $("login-btn"),
+  check: $("check-act"),
+  next: $("start-transfer"),
+  menu: $("hamMenu"),
+}
+const pages = {
+  transfer: $("transfer"),
+  withdraw: $("withdraw"),
+  deposit: $("deposit"),
+  login: $("loginPage"),
+  home: $("home"),
+}
+const amounts = {
   transferAmount: $("tr-amount"),
-  btn: $("tr-btn"),
+  depositAmount: $("tr-amount-add"),
+  withdrawAmount: $('wd-amount'),
+}
+const options = {
+  home: q(".homePage"),
+  tranfer: q(".transfer-op"),
+  withdraw: q(".withdraw-op"),
+  deposit: q(".deposit-op"),
+  history: q(".transHistory"),
+  logOut: q('.logout')
+}
+const elements = {
   actNum: $("act-num"),
   bankName: $("bank"),
-  checkBtn: $("check-act"),
   msg: $("message"),
-  nextBtn: $("start-transfer"),
   trScreen: $("tr-screen"),
-  addAmount: $("tr-amount-add"),
-  addBtn: $("add-btn"),
-  transOp: document.querySelectorAll(".transfer-op"),
-  withOp: document.querySelectorAll(".withdraw-op"),
-  depOp: document.querySelectorAll(".deposit-op"),
-  trans: $("transfer"),
-  with: $("withdraw"),
-  dep: $("deposit"),
   placeHolder: $("holder-text"),
   viewBalance: $('view-balance'),
-  withAmt: $('wd-amount'),
-  withBtn: $('wd-btn'),
   withPin: $('wd-pin'),
-  recentActBtn: document.querySelectorAll(".transHistory"),
   listRecent: $("list"),
   recentHistory: $("history"),
-  homePage: document.querySelectorAll(".homePage"),
-  hamburgerMenuBtn: $("hamMenu"),
   hamburgerMenu: $("mobile-menu"),
   hamMenuText: $("chosen-activity"),
-  loginPageBtn: $("login-btn"),
-  loginPage: $("loginPage"),
-  mainPage: $("main"),
   loginUsername: $("username"),
   userNameValue: $("user-name-value"),
   loginBalance: $("balance-value"),
   balance: $("balance"),
-  logOut: document.querySelectorAll('.logout')
 }
 
 
 if (loginStatus) {
-  elements.loginPage.classList.add("hidden");
-  elements.mainPage.classList.remove("hidden");
-  elements.hamburgerMenuBtn.classList.add('active-link')
+  pages.login.classList.add("hidden");
+  pages.home.classList.remove("hidden");
+  buttons.menu.classList.add('active-link')
   elements.hamMenuText.textContent = 'Home'
   elements.balance.textContent = amount;
   elements.userNameValue.textContent = userName
   elements.bankName.value = ''
   elements.actNum.value = ''
   elements.withPin.value = ''
-  elements.withAmt.value = ''
-  elements.addAmount.value = ''
+  amounts.withdrawAmount.value = ''
+  amounts.depositAmount.value = ''
 } else {
-  elements.loginPage.classList.remove("hidden");
-  elements.mainPage.classList.add("hidden")
+  pages.login.classList.remove("hidden");
+  pages.home.classList.add("hidden")
   elements.loginUsername.value = ''
   elements.loginBalance.value = ''
 }
 
 
-elements.loginPageBtn.addEventListener('click', () => {
+buttons.logIn.addEventListener('click', () => {
   const initUserName = elements.loginUsername.value.trim();
   const initUserBalance = Number(elements.loginBalance.value);
   if ((initUserBalance == '' || initUserBalance == 0) && initUserName == '') {
@@ -77,32 +86,35 @@ elements.loginPageBtn.addEventListener('click', () => {
   } else if (isNaN(initUserBalance) || initUserBalance == '') {
     errorMessage(elements.loginBalance, elements.loginUsername, "red", "blue")
     elements.loginBalance.focus()
-  } else {
+  } else if(initUserBalance <= 10000) {
     let loggedIn = true;
     elements.userNameValue.textContent = initUserName;
     elements.balance.textContent = initUserBalance;
-    elements.loginPage.classList.add("hidden");
-    elements.mainPage.classList.remove("hidden")
+    pages.login.classList.add("hidden");
+    pages.home.classList.remove("hidden")
     errorMessage(elements.loginBalance, elements.loginUsername, "blue", "blue")
     localStorage.setItem("name", initUserName)
     localStorage.setItem("balance", JSON.stringify(initUserBalance));
     localStorage.setItem("loggedIn", JSON.stringify(loggedIn))
+  } else {
+    errorMessage(elements.loginBalance, elements.loginUsername, "red", "blue")
+    elements.loginBalance.focus()
   }
 })
 
-elements.hamburgerMenuBtn.addEventListener('click', () => {
+buttons.menu.addEventListener('click', () => {
   elements.hamburgerMenu.classList.toggle('hidden')
-  elements.hamburgerMenuBtn.classList.add('bg-transparent')
-  elements.hamburgerMenuBtn.classList.add('text-[#5B35D5]')
+  buttons.menu.classList.add('bg-transparent')
+  buttons.menu.classList.add('text-[#5B35D5]')
 })
 elements.hamburgerMenu.addEventListener('click', () => {
   elements.hamburgerMenu.classList.add('hidden')
-  elements.hamburgerMenuBtn.classList.remove('bg-transparent')
+  buttons.menu.classList.remove('bg-transparent')
 })
 document.addEventListener("click", (e) => {
-  if (!elements.hamburgerMenu.contains(e.target) && !elements.hamburgerMenuBtn.contains(e.target)) {
+  if (!elements.hamburgerMenu.contains(e.target) && !buttons.menu.contains(e.target)) {
     elements.hamburgerMenu.classList.add("hidden");
-    elements.hamburgerMenuBtn.classList.remove('bg-transparent')
+    buttons.menu.classList.remove('bg-transparent')
   }
 });
 
@@ -118,21 +130,21 @@ elements.viewBalance.addEventListener('click', () => {
   }
 })
 
-elements.transOp.forEach(transOpt => {
+options.tranfer.forEach(transOpt => {
   transOpt.addEventListener('click', () => {
-    activityBtn(elements.trans, elements.transOp, "active-trans", 'Transfer')
+    activityBtn(pages.transfer, options.tranfer, "active-trans", 'Transfer')
   })
 })
 
-elements.withOp.forEach(withOpt => {
+options.withdraw.forEach(withOpt => {
   withOpt.addEventListener('click', () => {
-    activityBtn(elements.with, elements.withOp, "active-with", 'Withdraw')
+    activityBtn(pages.withdraw, options.withdraw, "active-with", 'Withdraw')
   })
 })
 
-elements.depOp.forEach(depOpt => {
+options.deposit.forEach(depOpt => {
   depOpt.addEventListener('click', () => {
-    activityBtn(elements.dep, elements.depOp, "active-dep", 'Deposit')
+    activityBtn(pages.deposit, options.deposit, "active-dep", 'Deposit')
   })
 })
 
@@ -144,11 +156,11 @@ function activityBtn(page, option, class1, text) {
   page.classList.remove("hidden")
   option.forEach(el => el.classList.add(class1))
   elements.recentHistory.classList.add("hidden")
-  elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
-  elements.homePage.forEach(el => el.classList.remove("active-link"))
+  options.history.forEach(el => el.classList.remove("active-link"))
+  options.home.forEach(el => el.classList.remove("active-link"))
   elements.msg.style.textAlign = 'left'
   elements.msg.style.padding = '0'
-  elements.hamburgerMenuBtn.classList.add(class1)
+  buttons.menu.classList.add(class1)
   elements.hamMenuText.textContent = text
   document.title = `Loixrang Bank - ${text}`
 }
@@ -181,16 +193,16 @@ function test() {
 }
 
 function clr() {
-  elements.dep.classList.add("hidden")
-  elements.with.classList.add("hidden")
-  elements.trans.classList.add("hidden")
-  elements.depOp.forEach(el => el.classList.remove("active-dep"))
-  elements.withOp.forEach(el => el.classList.remove("active-with"))
-  elements.transOp.forEach(el => el.classList.remove("active-trans"))
-  elements.hamburgerMenuBtn.classList.remove('active-dep')
-  elements.hamburgerMenuBtn.classList.remove('active-with')
-  elements.hamburgerMenuBtn.classList.remove('active-trans')
-  elements.hamburgerMenuBtn.classList.remove('active-link')
+  pages.deposit.classList.add("hidden")
+  pages.withdraw.classList.add("hidden")
+  pages.transfer.classList.add("hidden")
+  options.deposit.forEach(el => el.classList.remove("active-dep"))
+  options.withdraw.forEach(el => el.classList.remove("active-with"))
+  options.tranfer.forEach(el => el.classList.remove("active-trans"))
+  buttons.menu.classList.remove('active-dep')
+  buttons.menu.classList.remove('active-with')
+  buttons.menu.classList.remove('active-trans')
+  buttons.menu.classList.remove('active-link')
 }
 
 function errorMessage(activeElement, oldElement, activeColor, oldColor) {
@@ -212,50 +224,50 @@ function errorMessage(activeElement, oldElement, activeColor, oldColor) {
 }
 
 function deposit() {
-  const addValue = elements.addAmount.value;
+  const addValue = amounts.depositAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
 
   if (addValue > 3000) {
     elements.msg.textContent = `Unsuccessful, your amount exceeded the limit of 3000`
-    errorMessage(elements.addAmount)
+    errorMessage(amounts.depositAmount)
     return
   } else if (addValue < 100) {
     elements.msg.textContent = `Unsuccessful, your amount is below N100`
-    errorMessage(elements.addAmount)
+    errorMessage(amounts.depositAmount)
     return
   } else if (addValue <= 3000 && addValue >= 100) {
     newBalance = amount + Number(addValue)
     elements.balance.textContent = `N${newBalance}`
     elements.msg.textContent = `You have successfully added N${Number(addValue)} to your balance`
     elements.msg.style.color = 'green'
-    elements.addAmount.style.border = '2px solid green'
-    elements.addAmount.style.outline = 'none'
+    amounts.depositAmount.style.border = '2px solid green'
+    amounts.depositAmount.style.outline = 'none'
     transHistory.push(`You deposited N${Number(addValue)}`)
     localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
-    elements.addAmount.value = '';
+    amounts.depositAmount.value = '';
   }
 }
 
 function transfer(clientName) {
-  const trAmount = elements.transferAmount.value;
+  const trAmount = amounts.transferAmount.value;
   amount = JSON.parse(localStorage.getItem("balance"));
 
   if (amount == 0) {
-    elements.transferAmount.disabled = 'true'
-    return elements.msg.textContent = `You have no money, fam`
+    amounts.transferAmount.disabled = 'true'
+    return elements.msg.textContent = `You have no money, go deposit some`
   }
 
   if (trAmount < 100) {
     elements.msg.textContent = `Unsuccessfull! - amount below N100`
     errorMessage()
-    elements.transferAmount.value = ''
+    amounts.transferAmount.value = ''
     return
   } else if (trAmount > amount) {
     elements.msg.textContent = `Unsuccessfull! - Number above balance`
     errorMessage()
-    elements.transferAmount.value = ''
+    amounts.transferAmount.value = ''
     return
   } else if (trAmount <= amount && trAmount >= 100) {
     newBalance = amount - trAmount
@@ -266,32 +278,32 @@ function transfer(clientName) {
     localStorage.setItem("history", JSON.stringify(transHistory))
     elements.balance.textContent = newBalance;
     localStorage.setItem("balance", JSON.stringify(newBalance))
-    elements.transferAmount.value = ''
+    amounts.transferAmount.value = ''
     elements.actNum.value = ''
     elements.bankName.value = ''
-    elements.nextBtn.classList.add('hidden')
+    buttons.next.classList.add('hidden')
     elements.trScreen.classList.add("hidden")
   }
 }
 
 function withdraw() {
-  let value = Number(elements.withAmt.value);
+  let value = Number(amounts.withdrawAmount.value);
   let pin = Number(elements.withPin.value);
   amount = JSON.parse(localStorage.getItem("balance"));
 
   if (value == '' || value < 100) {
     elements.msg.textContent = 'Enter a number above 100'
-    errorMessage(elements.withAmt, elements.withPin, "red", "blue")
+    errorMessage(amounts.withdrawAmount, elements.withPin, "red", "blue")
     return
   } else if (pin < 1000 || pin == '') {
-    elements.withAmt.disabled = true
+    amounts.withdrawAmount.disabled = true
     elements.msg.textContent = 'Enter a 4 digit pin'
-    errorMessage(elements.withPin, elements.withAmt, "red", "blue")
+    errorMessage(elements.withPin, amounts.withdrawAmount, "red", "blue")
     return
   } else if (value > amount) {
-    elements.withAmt.disabled = false
+    amounts.withdrawAmount.disabled = false
     elements.msg.textContent = `Insufficient funds`
-    elements.withAmt.value = ''
+    amounts.withdrawAmount.value = ''
     elements.withPin.value = ''
     elements.withPin.style.border = '2px solid blue'
     errorMessage()
@@ -302,7 +314,7 @@ function withdraw() {
     transHistory.push(`You withdrawed N${Number(value)}`)
     elements.msg.style.color = 'blue'
     elements.withPin.style.border = '2px solid blue'
-    elements.withAmt.value = ''
+    amounts.withdrawAmount.value = ''
     elements.withPin.value = ''
     elements.balance.textContent = newBalance;
     localStorage.setItem("history", JSON.stringify(transHistory))
@@ -334,10 +346,10 @@ function checkButton() {
         elements.bankName.style.border = '2px solid #5B35D5'
         elements.msg.style.color = '#5B35D5'
         elements.msg.style.padding = '0 2px'
-        elements.nextBtn.classList.remove('hidden')
-        elements.nextBtn.addEventListener('click', () => {
+        buttons.next.classList.remove('hidden')
+        buttons.next.addEventListener('click', () => {
           elements.trScreen.classList.remove("hidden")
-          elements.btn.addEventListener('click', () => {
+          buttons.transfer.addEventListener('click', () => {
             transfer(details.fullname)
           })
         })
@@ -352,41 +364,41 @@ function checkButton() {
   }
 }
 
-elements.checkBtn.addEventListener('click', () => {
+buttons.check.addEventListener('click', () => {
   checkButton()
 })
 
-elements.addBtn.addEventListener('click', () => {
+buttons.deposit.addEventListener('click', () => {
   deposit()
 })
 
-elements.withBtn.addEventListener('click', () => {
+buttons.withdraw.addEventListener('click', () => {
   withdraw()
 })
 
 
-elements.homePage.forEach(homePage => {
+options.home.forEach(homePage => {
   homePage.addEventListener('click', () => {
-    elements.homePage.forEach(el => el.classList.add("active-link"))
-    elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
+    options.home.forEach(el => el.classList.add("active-link"))
+    options.history.forEach(el => el.classList.remove("active-link"))
     elements.placeHolder.classList.remove("hidden")
     elements.recentHistory.classList.add("hidden")
     clr()
     elements.msg.textContent = ''
     elements.msg.classList.add("hidden")
-    elements.hamburgerMenuBtn.classList.add('active-link')
+    buttons.menu.classList.add('active-link')
     elements.hamMenuText.textContent = 'Home'
     document.title = 'Loixrang Bank'
   })
 })
 
 //Transaction History
-elements.recentActBtn.forEach(recent => {
+options.history.forEach(recent => {
   recent.addEventListener('click', () => {
     transactions()
     recent.classList.add('active-link')
-    elements.homePage.forEach(el => el.classList.remove("active-link"))
-    elements.hamburgerMenuBtn.classList.add('active-link')
+    options.home.forEach(el => el.classList.remove("active-link"))
+    buttons.menu.classList.add('active-link')
     elements.hamMenuText.textContent = 'History'
     document.title = 'Loixrang Bank - History'
   })
@@ -412,13 +424,13 @@ function transactions() {
   }
 }
 
-elements.logOut.forEach(logout => {
+options.logOut.forEach(logout => {
   logout.addEventListener('click', () => {
     localStorage.clear()
-    elements.loginPage.classList.remove("hidden");
-    elements.mainPage.classList.add("hidden");
-    elements.homePage.forEach(el => el.classList.add("active-link"))
-    elements.recentActBtn.forEach(el => el.classList.remove("active-link"))
+    pages.login.classList.remove("hidden");
+    pages.home.classList.add("hidden");
+    options.home.forEach(el => el.classList.add("active-link"))
+    options.history.forEach(el => el.classList.remove("active-link"))
     elements.recentHistory.classList.add("hidden")
     elements.placeHolder.classList.remove("hidden")
     elements.loginUsername.value = ''
@@ -426,7 +438,7 @@ elements.logOut.forEach(logout => {
     clr()
     elements.msg.textContent = ''
     elements.msg.classList.add("hidden")
-    elements.hamburgerMenuBtn.classList.add('active-link')
+    buttons.menu.classList.add('active-link')
     elements.hamMenuText.textContent = 'Home'
     document.title = 'Loixrang Bank - Log in'
   })
