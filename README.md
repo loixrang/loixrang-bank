@@ -1,98 +1,46 @@
-# 🏦 Loixrang Bank
+# Loixrang Bank
 
-A frontend banking simulation built with **JavaScript, Vite, and Tailwind CSS**.
+A frontend banking simulation built with JavaScript, Vite, and Tailwind CSS.
 
-Loixrang Bank is a browser-based banking interface created as a JavaScript learning project. It simulates common banking operations such as depositing money, withdrawing funds, transferring money, viewing balances, and checking transaction history.
+Loixrang Bank is a browser-based banking interface created as a JavaScript learning project. It simulates common banking operations such as depositing money, withdrawing funds, transferring money, viewing account balances, and checking transaction history.
 
 > **Note:** This is a frontend simulation for learning purposes. It does not connect to a real banking system and should not be used with real financial information.
 
-## ✨ Features
+## Features
 
-- 🔐 **Login system**
-  - Enter a username and starting balance
-  - Login state is persisted with `localStorage`
-  - Automatic login state restoration
+* User login system
+* Account balance management
+* Show and hide account balance
+* Deposit functionality with validation
+* Withdrawal functionality with PIN validation
+* Insufficient funds checking
+* Bank transfer functionality
+* Predefined accounts for testing transfers
+* Transaction history
+* Persistent data using LocalStorage
+* Responsive layout for desktop and mobile
+* Mobile navigation menu
+* Interactive UI and transaction states
 
-- 💰 **Balance management**
-  - View account balance
-  - Hide/show balance
-  - Balance updates automatically after transactions
+## Built With
 
-- 💵 **Deposits**
-  - Add money to the account
-  - Minimum deposit validation
-  - Maximum deposit limit
-  - Balance updates immediately
+* HTML5
+* JavaScript (ES Modules)
+* Tailwind CSS
+* Vite
+* LocalStorage API
 
-- 💸 **Withdrawals**
-  - Withdraw money from the account
-  - PIN validation
-  - Insufficient-funds checking
-  - Balance updates after successful withdrawals
-
-- 🔄 **Transfers**
-  - Select a bank
-  - Enter an account number
-  - Verify account details
-  - Transfer funds to predefined accounts
-  - Balance updates after successful transfers
-
-- 📜 **Transaction history**
-  - Automatically records deposits, withdrawals, and transfers
-  - Most recent transactions are displayed first
-  - History persists between sessions
-
-- 📱 **Responsive interface**
-  - Desktop and mobile navigation
-  - Responsive activity sections
-  - Mobile hamburger menu
-  - Adaptive UI across screen sizes
-
-- 🎨 **Modern UI**
-  - Tailwind CSS styling
-  - Inter font
-  - Rounded cards and controls
-  - Backdrop blur effects
-  - Interactive navigation and transaction states
-
-## 🛠️ Built With
-
-- **HTML5** — Application structure
-- **CSS** — Custom styling
-- **JavaScript (ES Modules)** — Application logic and interactions
-- **Tailwind CSS v4** — Utility-first styling
-- **Vite** — Development server and build tool
-- **LocalStorage API** — Client-side persistence
-
-## 📂 Project Structure
-
-```text
-bank-project/
-├── public/
-├── src/
-│   ├── assets/
-│   │   └── fonts/
-│   │       └── Inter-VariableFont_opsz,wght.ttf
-│   ├── main.js
-│   └── style.css
-├── .gitignore
-├── index.html
-├── package.json
-├── package-lock.json
-└── vite.config.ts
-```
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-Make sure you have **Node.js** and **npm** installed.
+Make sure you have Node.js and npm installed on your computer.
 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/loixrang/bank-project.git
-cd bank-project
+git clone https://github.com/loixrang/loixrang-bank.git
+cd loixrang-bank
 ```
 
 ### Install dependencies
@@ -107,7 +55,7 @@ npm install
 npm run dev
 ```
 
-Vite will provide a local development URL, typically:
+Vite will provide a local development URL, usually:
 
 ```text
 http://localhost:5173
@@ -125,98 +73,96 @@ npm run build
 npm run preview
 ```
 
-## 💾 Data Persistence
+## Data Persistence
 
-Loixrang Bank currently uses the browser's **LocalStorage API** instead of a backend database.
+The application currently uses the browser's LocalStorage API instead of a backend database.
 
 The application stores information such as:
 
-```text
-name
-balance
-loggedIn
-history
-```
+* Username
+* Account balance
+* Login state
+* Transaction history
 
-This allows the simulated account state and transaction history to remain available after refreshing the page or reopening the application in the same browser.
-
-### Clearing application data
+This allows account information and transaction history to remain available after refreshing the page or reopening the application in the same browser.
 
 Logging out clears the application's stored LocalStorage data.
 
-You can also manually clear the data through your browser's developer tools if you want to reset the application.
+## Demo Accounts
 
-## 🏦 Demo Accounts
+The transfer system includes predefined accounts that can be used for testing.
 
-Transfers can be tested against the predefined accounts in the application:
+| Name         | Bank     | Account Number |
+| ------------ | -------- | -------------- |
+| Peter Parker | FCMB     | `1234`         |
+| Bruce Wayne  | WEMA     | `2345`         |
+| Clark Kent   | Fidelity | `5678`         |
+| Lois Lane    | Access   | `6789`         |
 
-| Name | Bank | Account Number |
-|---|---|---:|
-| Peter Parker | FCMB | `1234` |
-| Bruce Wayne | WEMA | `2345` |
-| Clark Kent | Fidelity | `5678` |
-| Lois Lane | Access | `6789` |
+These are dummy accounts defined in the frontend and are not real banking accounts.
 
-> These are **dummy accounts defined in the frontend** and are not real banking accounts.
+## Security Notice
 
-## 🔒 Important Security Notice
+This project is a frontend learning project and is not a real banking application.
 
-This project is a **frontend learning project**, not a real banking application.
-
-It currently stores account information and transaction data in `localStorage` and performs all banking logic in client-side JavaScript. This means it does **not** provide the security guarantees required for a real financial application.
+Account information and transaction data are stored in LocalStorage, while the banking logic runs entirely in client-side JavaScript. As a result, the application does not provide the security required for handling real financial information.
 
 Do not enter real:
 
-- Bank account information
-- Banking PINs
-- Passwords
-- Financial information
-- Personally identifiable information
+* Bank account information
+* Banking PINs
+* Passwords
+* Financial information
+* Personally identifiable information
 
-A production banking application would require a secure backend, authentication, authorization, encrypted communication, server-side transaction validation, secure credential handling, a database, and significantly more security controls.
+A production banking application would require a secure backend, proper authentication and authorization, encrypted communication, server-side transaction validation, secure credential handling, a database, and additional security controls.
 
-## 🎯 Purpose
+## Project Purpose
 
-This project was built to practice and demonstrate JavaScript concepts including:
+This project was built to practice and improve my JavaScript skills, particularly:
 
-- DOM manipulation
-- Event listeners
-- Functions
-- Objects
-- Arrays
-- Array iteration
-- Form validation
-- Conditional logic
-- LocalStorage
-- Dynamic element creation
-- State management
-- Responsive UI interaction
-- ES modules
-- Working with Vite
-- Tailwind CSS
+* DOM manipulation
+* Event listeners
+* Functions
+* Objects and arrays
+* Array methods
+* Form validation
+* Conditional logic
+* LocalStorage
+* Dynamic element creation
+* State management
+* ES modules
+* Responsive UI development
+* Vite
+* Tailwind CSS
 
-The project also evolved incrementally, with its Git history documenting the development process from the initial banking UI through transaction functionality, LocalStorage persistence, mobile responsiveness, login functionality, and UI refinements.
+The project was developed incrementally, with each feature building on the previous version.
 
-## 🔮 Possible Future Improvements
+## Future Improvements
 
-- [ ] Add a real backend
-- [ ] Add database persistence
-- [ ] Implement proper authentication
-- [ ] Hash passwords/PINs
-- [ ] Add multiple user profiles
-- [ ] Add account creation
-- [ ] Add transaction timestamps
-- [ ] Add transaction categories
-- [ ] Add transaction search/filtering
-- [ ] Add transfer confirmation screens
-- [ ] Add dark mode
-- [ ] Add charts and spending analytics
-- [ ] Add proper API integration
-- [ ] Add automated tests
-- [ ] Improve accessibility
-- [ ] Add deployment configuration
+Some features I may add in future versions include:
 
-## 👨‍💻 Author
+* Backend integration
+* Database persistence
+* Proper authentication
+* Password and PIN hashing
+* Multiple user profiles
+* Account creation
+* Transaction timestamps
+* Transaction categories
+* Transaction search and filtering
+* Transfer confirmation screens
+* Dark mode
+* Spending analytics
+* API integration
+* Automated tests
+* Improved accessibility
+
+## Live Demo
+
+https://loixrang-bank.vercel.app
+
+## Author
 
 **Loixrang**
 
